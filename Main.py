@@ -8,7 +8,7 @@ screen = pygame.display.set_mode(size)
 
 Clock = pygame.time.Clock();
 
-player = Bro(8, [1500/2, 900/2])
+player = Bro(8, [0,0], [1500/2, 900/2])
 Bros = [player]
 while True:
 	for event in pygame.event.get():
@@ -31,9 +31,7 @@ while True:
 			elif event.key == pygame.K_w or event.key == pygame.K_UP:
 				player.goKey("sup")
 			elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
-				player.goKey("sdown")
-	
-	
+				player.goKey("sdown")	
 	
 	screen.fill((13, 54, 22))
 	for Bro in Bros:
@@ -41,3 +39,6 @@ while True:
 	pygame.display.flip()
 	Clock.tick(60);
 	print(Clock.get_fps())
+
+	for Bro in Bros:
+		Bro.update(size)
