@@ -12,13 +12,44 @@ from math import *
 #If you chgange anything, one must substitute into the other. Good Luck.
 #   K=(mv^2)/2
 #Kinetic energy must transfer between objects, which means that all energy levels will be diffferent before and after the collision.
-
+#
 #you will know the math works if, when you run a inelastic collision, the objects both have the same velociy after
 #                                              an  elastic collision, the objects have separate velocities, not necessarily traveling antiparallel.
 #               have fun lmao
+m1=10
+m2=50
+v10=4
+v20=-5
 
-def elasticCollision:
-     
-
-def inelasticCollision:
+def elasticCollision(m1=1, m2=2, v10=3, v20=4):
+    ke10=(m1*v10^2)/2
+    ke20=(m2*v20^2)/2
+    p10=m1*v10
+    p20=m2*v20
+    # ~ ke10+ke20=ke11+ke21
+    # ~ p10+p20=p11+p21
+    # ~ INCOMPLETE
     
+    
+def inelasticCollision(m1=1, m2=2, v10=3, v20=4):
+    v11=(m1*v10+m2*v20)/(m1+m2)
+    v21=v11
+    print(v11)
+    return [
+        v11,
+        m1,
+        v21,
+        m2]
+
+# ~ print(inelasticCollision(m1, m2, v10, v20))
+# ~ n1=inelasticCollision(m1, m2, v10, v20)
+# ~ v11=n1[0]
+# ~ m1=n1[1]
+# ~ v21=n1[2]
+# ~ m2=n1[3]
+# ~ print(v11, "veolocity object one after collision")
+# ~ print(m1, "mass object one after collision")
+# ~ print(v21, "velocity object two after collision")
+# ~ print(m2, "mass object two after collision")
+
+# ~ All this stuff works, inelastic collisions are good
