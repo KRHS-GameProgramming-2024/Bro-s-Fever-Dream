@@ -1,10 +1,12 @@
 import math, pygame, sys, random
 	
-size = [1500,900]	
-		
 class Bro():
 	def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
-		self.image = pygame.image.load("Bro/Images/BroLeft.png")
+		self.images = [pygame.image.load("Bro/Images/BroLeft.png"),
+						pygame.image.load("Bro/Images/BroRight.png")]
+		self.frame = 0
+		self.frameMax = len(self.images)-1
+		self.image = self.images[self.frame]  
 		self.rect = self.image.get_rect()
 		self.rect = self.rect.move(startPos)
 		self.maxSpeed = maxSpeed
@@ -12,10 +14,9 @@ class Bro():
 		self.speedy = speed[1]
 		self.speed = [self.speedx, self.speedy]
 		self.kind = "Bro"
-		
+			
 		self.didBounceX = False
 		self.didBounceY = False
-		self.wallCollide(size)	
 		
 	def move(self):
 		self.speed = [self.speedx, self.speedy]
@@ -38,7 +39,14 @@ class Bro():
 			self.speedy = 0
 		elif direction == "sdown":
 			self.speedy = 0
-			
+	
+	def look(self, look):
+		if look == "right":
+			self.frame = 1
+		elif look == "left":
+			self.frame = 0
+		self.image = self.images[self.frame]
+		
 	def wallCollide(self, size):
 		width = size[0]
 		height = size[1]
@@ -65,9 +73,23 @@ class Bro():
 				self.move()
 				self.speedx = 0
 				self.didBounceX = True
+				
+	def wallsCollide(self, other):
+		if self.rect.right > other.rect.left:
+			if self.rect.left < other.rect.right:
+				if self.rect.bottom > other.rect.top:
+					if self.rect.top < other.rect.bottom:
+						if not self.didBounceX:
+							self.speedx = -self.speedx
+							self.didBounceX = True
+						if not self.didBounceY:
+							self.speedy = -self.speedy
+							self.didBounceY = True
+							return True
+
 	def update(self, size):
 		self.move()
+		self.didBounceX = False
+		self.didBounceY = False
+		self.wallCollide(size)
 		
-
-
-
