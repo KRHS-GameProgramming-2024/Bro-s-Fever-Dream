@@ -1,7 +1,6 @@
 import pygame, sys, math
 from Wall import *
 
-
 def loadLevel(lev):
     f = open(lev, 'r')
     lines = f.readlines()
@@ -49,7 +48,13 @@ if __name__ == "__main__":
                 sys.exit();
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                    levY = int(levY+1),
+                elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                    levY = int(levY-1)
+                elif event.key == pygame.K_w or event.key == pygame.K_UP:
                     levX = int(levX+1)
+                elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    levX = int(levX-1)
                 print(str(world)+str(levX)+str(levY)+ ".lvl")
                 
         screen.fill((97, 164, 229))
