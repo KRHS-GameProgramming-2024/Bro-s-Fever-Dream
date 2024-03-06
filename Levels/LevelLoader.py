@@ -48,14 +48,21 @@ if __name__ == "__main__":
                 sys.exit();
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                    levY = int(levY+1),
+                    
+                        levY = int(levY+1)
                 elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                    levY = int(levY-1)
+                    if levY > 0:
+                        levY = int(levY-1)
                 elif event.key == pygame.K_w or event.key == pygame.K_UP:
-                    levX = int(levX+1)
+                    if levX > 0:
+                        levX = int(levX-1)
                 elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                    levX = int(levX-1)
+                    levX = int(levX+1)
                 print(str(world)+str(levX)+str(levY)+ ".lvl")
+                try:
+                    walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+                except:
+                    pass
                 
         screen.fill((97, 164, 229))
         for wall in walls:
