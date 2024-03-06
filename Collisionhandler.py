@@ -15,7 +15,7 @@ from math import *
 #
 #you will know the math works if, when you run a inelastic collision, the objects both have the same velociy after
 #                                              an  elastic collision, the objects have separate velocities, not necessarily traveling antiparallel.
-#               have fun lmao
+#               have fun lmao I had to google it to find out
 m1=10
 m2=50
 v10=4
@@ -26,9 +26,17 @@ def elasticCollision(m1=1, m2=2, v10=3, v20=4):
     ke20=(m2*v20^2)/2
     p10=m1*v10
     p20=m2*v20
+    v11=(2 * m2 * v20 + (m1 - m2) * v10)/(m1 + m2) + v10 - v20
+    v21=(2 * m1 * v10 + (m2 - m1) * v20)/(m2 + m1) + v20 - v10
     # ~ ke10+ke20=ke11+ke21
     # ~ p10+p20=p11+p21
-    # ~ INCOMPLETE
+    #print(str(v11) + " is first velo" + "\n" + str(v21) + " is second velo")
+    return [
+        v11,
+        m1,
+        v21,
+        m2]
+    
     
     
 def inelasticCollision(m1=1, m2=2, v10=3, v20=4):
@@ -53,3 +61,14 @@ def inelasticCollision(m1=1, m2=2, v10=3, v20=4):
 # ~ print(m2, "mass object two after collision")
 
 # ~ All this stuff works, inelastic collisions are good
+
+# ~ print(elasticCollision(m1, m2, v10, v20))
+# ~ v11=n1[0]
+# ~ m1=n1[1]
+# ~ v21=n1[2]
+# ~ m2=n1[3]
+# ~ print(v11, "veolocity object one after collision")
+# ~ print(m1, "mass object one after collision")
+# ~ print(v21, "velocity object two after collision")
+# ~ print(m2, "mass object two after collision")
+
