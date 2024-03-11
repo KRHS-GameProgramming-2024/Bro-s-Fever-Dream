@@ -12,15 +12,14 @@ while True:
 
 	if number == "1":
 		print("Cave Theme")
-		pygame.mixer.music.load("CaveTheme.mp3")
-		pygame.mixer.music.play(-1)	
+		pygame.mixer.music.load("CaveThemeIntro.mp3")
+		pygame.mixer.music.queue("FinalBossLoopCut.mp3", "mp3", -1)
+		pygame.mixer.music.play()		
 	elif number == "2":
 		print("Final Boss")
-		FinalBoss = True
-		pygame.mixer.music.load("Test1.mp3")
-		pygame.mixer.music.queue("Test2.mp3", "mp3", -1)
-		pygame.mixer.music.play()
-		
+		pygame.mixer.music.load("FinalBossIntro (mp3cut.net).mp3")
+		pygame.mixer.music.queue("FinalBossLoopCut.mp3", "mp3", -1)
+		pygame.mixer.music.play()		
 	elif number == "3":
 		print("Final Boss 2nd Phase")
 		pygame.mixer.music.load("CaveTheme.mp3")
@@ -37,7 +36,11 @@ while True:
 		print("The Lava")
 		pygame.mixer.music.load("TheLava.mp3")
 		pygame.mixer.music.play(-1)
-
+	elif number == "0":
+		print("Test")
+		pygame.mixer.music.load("Test1.mp3")
+		pygame.mixer.music.queue("Test2.mp3", "mp3", -1)
+		pygame.mixer.music.play()
 
 
 
