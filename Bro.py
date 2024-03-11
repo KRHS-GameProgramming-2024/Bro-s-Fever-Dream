@@ -2,8 +2,8 @@ import math, pygame, sys, random
 	
 class Bro():
 	def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
-		self.images = [pygame.image.load("Bro/Images/BroLeft.png"),
-						pygame.image.load("Bro/Images/BroRight.png")]
+		self.images = [pygame.image.load("Bro/Images/BroLeftBigger.png"),
+						pygame.image.load("Bro/Images/BroRightBigger.png")]
 		self.frame = 0
 		self.frameMax = len(self.images)-1
 		self.image = self.images[self.frame]  
