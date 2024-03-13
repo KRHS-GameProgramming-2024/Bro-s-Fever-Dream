@@ -1,9 +1,10 @@
 import math, pygame, sys, random
-	
-class Bro():
-    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
-        self.images = [pygame.image.load("Bro/Images/BroLeftBigger.png"),
-                        pygame.image.load("Bro/Images/BroRightBigger.png")]
+
+class Enemy: 
+    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(0,1500),random.randint(0,900)], name = "monster", damage = "1", health = "1", image = "crazyPizza.png", doesFall = True):
+        
+        self.images = [pygame.image.load(image)]
+        
         self.frame = 0
         self.frameMax = len(self.images)-1
         self.image = self.images[self.frame]  
@@ -13,33 +14,17 @@ class Bro():
         self.speedx = speed[0]
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
-        self.kind = "Bro"
-            
+        self.kind = "Enemy"
+
+
+
         self.didBounceX = False
         self.didBounceY = False
         
     def move(self):
         self.speed = [self.speedx, self.speedy]
-        self.rect = self.rect.move(self.speed)      
-
-    def goKey(self, direction):
-        if direction == "left":
-            self.speedx = -self.maxSpeed
-        elif direction == "right":
-            self.speedx = self.maxSpeed
-        elif direction == "up":
-            self.speedy = -64
-        elif direction == "down":
-            self.speedy = self.maxSpeed
-        elif direction == "sleft":
-            self.speedx = 0
-        elif direction == "sright":
-            self.speedx = 0
-        elif direction == "sup":
-            self.speedy = 0
-        elif direction == "sdown":
-            self.speedy = 0
-    
+        self.rect = self.rect.move(self.speed) 
+        
     def look(self, look):
         if look == "right":
             self.frame = 1
@@ -61,7 +46,6 @@ class Bro():
                 self.move()
                 self.speedy = 0
                 self.didBounceY = True
-                
         if not self.didBounceX:
             if self.rect.right > width:
                 self.speedx = -self.speedx
@@ -73,7 +57,7 @@ class Bro():
                 self.move()
                 self.speedx = 0
                 self.didBounceX = True
-                
+    
     def wallsCollide(self, other):
         if self.rect.right > other.rect.left:
             if self.rect.left < other.rect.right:
@@ -88,15 +72,11 @@ class Bro():
                             return True
                         pass
     def fall(self, size):
-        if self.rect.bottom > 0:
-            self.speedy += 6
-        if self.rect.bottom == 0:
-            self.speedy = 0
+        if doesFall == True:
+            if self.rect.bottom > 0:
+                self.speedy += 6
+            if self.rect.bottom == 0:
+                self.speedy = 0
 
-    def update(self, size):
-        self.move()
-        self.didBounceX = False
-        self.didBounceY = False
-        self.wallCollide(size)
-        self.fall(size)
-        
+def GoopyGlobSpawn():
+    Enemy(name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GooppyGlob.png")

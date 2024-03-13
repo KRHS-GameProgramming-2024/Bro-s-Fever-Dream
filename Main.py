@@ -1,6 +1,7 @@
 import math, pygame, sys, random
 from Bro import*
 from Walls import*
+from Enemy import *
 
 pygame.init()
 
@@ -51,3 +52,5 @@ while True:
 	
 	for Bro in Bros:
 		Bro.update(size)
+    
+entities = []
