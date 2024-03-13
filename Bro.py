@@ -1,5 +1,5 @@
 import math, pygame, sys, random
-    
+	
 class Bro():
     def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
         self.images = [pygame.image.load("Bro/Images/BroLeft.png"),
