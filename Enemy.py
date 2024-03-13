@@ -72,11 +72,11 @@ class Enemy:
                             return True
                         pass
     def fall(self, size):
-        if doesFall == True
+        if doesFall == True:
             if self.rect.bottom > 0:
                 self.speedy += 6
             if self.rect.bottom == 0:
                 self.speedy = 0
 
-def enemySpawn():
-    
+def GoopyGlobSpawn():
+    Enemy(name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GooppyGlob.png")
