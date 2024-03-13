@@ -1,6 +1,6 @@
 import math, pygame, sys, random
 
-class Enemy: 
+class Charter: 
     def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(0,1500),random.randint(0,900)], name = "monster", damage = "1", health = "1", image = "crazyPizza.png", doesFall = True):
         
         self.images = [pygame.image.load(image)]
@@ -21,6 +21,12 @@ class Enemy:
         self.didBounceX = False
         self.didBounceY = False
         
+        self.gravity = 3
+        self.jumping = False
+        self.jumpHeight = 50
+        
+    
+        
     def move(self):
         self.speed = [self.speedx, self.speedy]
         self.rect = self.rect.move(self.speed) 
@@ -35,12 +41,13 @@ class Enemy:
     def wallCollide(self, size):
         width = size[0]
         height = size[1]
+        if self.rect.bottom > height:
+            self.rect.bottom = height
+            self.speedy = 0
+            self.jumping = False
+            print("Hit Ground")
         if not self.didBounceY:
-            if self.rect.bottom > height:
-                self.speedy = -self.speedy
-                self.move()
-                self.speedy = 0
-                self.didBounceY = True
+            
             if self.rect.top < 0:
                 self.speedy = -self.speedy
                 self.move()
@@ -71,12 +78,14 @@ class Enemy:
                             self.didBounceY = True
                             return True
                         pass
-    def fall(self, size):
-        if doesFall == True:
-            if self.rect.bottom > 0:
-                self.speedy += 6
-            if self.rect.bottom == 0:
-                self.speedy = 0
 
-def GoopyGlobSpawn():
-    Enemy(name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GooppyGlob.png")
+    def update(self, size):
+        print(self.speed)
+        self.speedy += self.gravity
+        self.move()
+        self.didBounceX = False
+        self.didBounceY = False
+        self.wallCollide(size)
+        
+
+

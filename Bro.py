@@ -1,7 +1,9 @@
 import math, pygame, sys, random
+from Enemy import *
 	
-class Bro():
+class Bro(Charter):
     def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
+        Charter.__init__(self, [0,0], startPos)
         self.images = [pygame.image.load("Bro/Images/BroLeftBigger.png"),
                         pygame.image.load("Bro/Images/BroRightBigger.png")]
         self.frame = 0
@@ -18,17 +20,16 @@ class Bro():
         self.didBounceX = False
         self.didBounceY = False
         
-    def move(self):
-        self.speed = [self.speedx, self.speedy]
-        self.rect = self.rect.move(self.speed)      
-
+   
+                
     def goKey(self, direction):
         if direction == "left":
             self.speedx = -self.maxSpeed
         elif direction == "right":
             self.speedx = self.maxSpeed
-        elif direction == "up":
-            self.speedy = -64
+        elif direction == "up" and not self.jumping:
+            self.jumping = True
+            self.speedy = -self.jumpHeight
         elif direction == "down":
             self.speedy = self.maxSpeed
         elif direction == "sleft":
@@ -36,7 +37,8 @@ class Bro():
         elif direction == "sright":
             self.speedx = 0
         elif direction == "sup":
-            self.speedy = 0
+            # ~ self.speedy = 0
+            pass
         elif direction == "sdown":
             self.speedy = 0
     
@@ -47,32 +49,6 @@ class Bro():
             self.frame = 0
         self.image = self.images[self.frame]
         
-    def wallCollide(self, size):
-        width = size[0]
-        height = size[1]
-        if not self.didBounceY:
-            if self.rect.bottom > height:
-                self.speedy = -self.speedy
-                self.move()
-                self.speedy = 0
-                self.didBounceY = True
-            if self.rect.top < 0:
-                self.speedy = -self.speedy
-                self.move()
-                self.speedy = 0
-                self.didBounceY = True
-                
-        if not self.didBounceX:
-            if self.rect.right > width:
-                self.speedx = -self.speedx
-                self.move()
-                self.speedx = 0
-                self.didBounceX = True
-            if self.rect.left < 0:
-                self.speedx = -self.speedx
-                self.move()
-                self.speedx = 0
-                self.didBounceX = True
                 
     def wallsCollide(self, other):
         if self.rect.right > other.rect.left:
@@ -87,16 +63,8 @@ class Bro():
                             self.didBounceY = True
                             return True
                         pass
-    def fall(self, size):
-        if self.rect.bottom > 0:
-            self.speedy += 6
-        if self.rect.bottom == 0:
-            self.speedy = 0
 
-    def update(self, size):
-        self.move()
-        self.didBounceX = False
-        self.didBounceY = False
-        self.wallCollide(size)
-        self.fall(size)
+
+    
+        
         
