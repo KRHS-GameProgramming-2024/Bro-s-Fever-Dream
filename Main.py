@@ -15,8 +15,7 @@ Clock = pygame.time.Clock();
 tiles = loadLevel("levels/100.lvl")
 walls = tiles
 counter = 0
-walls = [Wall([0,0]),
-         Wall([75,75])]
+walls = tiles
 
 player = Bro(8, [0,0], [1024/2, 768/2])
 Bros = [player]
