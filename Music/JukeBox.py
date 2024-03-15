@@ -4,7 +4,7 @@ pygame.mixer.init()
 
 SONGEND = pygame.USEREVENT
 
-print("1: Cave Theme \n2: Final Boss\n3: Final Boss 2nd Phase\n4: Sad Theme\n5: Starter Enemy Theme\n6: The Lava")
+print("1: Cave Theme \n2: Final Boss\n3: Final Boss 2nd Phase\n4: Sad Theme\n5: Starter Enemy Theme\n6: The Lava\n7: Serious Conversation Theme")
 
 while True:
 	number = input("Press a number: ")
@@ -26,16 +26,22 @@ while True:
 		pygame.mixer.music.play(-1)
 	elif number == "4":
 		print("Sad Theme")
-		pygame.mixer.music.load("SadTheme.mp3")
+		pygame.mixer.music.load("SadThemeLoop.mp3")
 		pygame.mixer.music.play(-1)
 	elif number == "5":
 		print("Starter Enemy Theme")
-		pygame.mixer.music.load("StarterEnemyTheme.mp3")
-		pygame.mixer.music.play(-1)
+		pygame.mixer.music.load("StarterEnemyThemeIntro.mp3")
+		pygame.mixer.music.queue("StarterEnemyThemeLoop.mp3", "mp3", -1)
+		pygame.mixer.music.play()
 	elif number == "6":
 		print("The Lava")
 		pygame.mixer.music.load("TheLava.mp3")
 		pygame.mixer.music.play(-1)
+	elif number == "7":
+		print("Serious Conversation Theme")
+		pygame.mixer.music.load("SeriousConversationIntro.mp3")
+		pygame.mixer.music.queue("SeriousConversationLoop.mp3", "mp3", -1)
+		pygame.mixer.music.play()
 	elif number == "0":
 		print("Test")
 		pygame.mixer.music.load("Test1.mp3")
