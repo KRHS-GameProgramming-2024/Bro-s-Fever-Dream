@@ -1,4 +1,5 @@
 import math, pygame, sys, random
+from LevelLoader import *
 from Bro import*
 from Walls import*
 from Enemy import *
@@ -6,15 +7,18 @@ from GoopyGlob import *
 
 pygame.init()
 
-size = [1500,900]
+size = [1024,768]
 screen = pygame.display.set_mode(size)
 
 Clock = pygame.time.Clock();
+
+tiles = loadLevel("levels/100.lvl")
+walls = tiles
 counter = 0
 walls = [Wall([0,0]),
          Wall([75,75])]
 
-player = Bro(8, [0,0], [1500/2, 900/2])
+player = Bro(8, [0,0], [1024/2, 768/2])
 Bros = [player]
 while True:
     for event in pygame.event.get():
