@@ -2,6 +2,7 @@ import math, pygame, sys, random
 from Bro import*
 from Walls import*
 from Enemy import *
+from GoopyGlob import *
 
 pygame.init()
 
@@ -9,7 +10,7 @@ size = [1500,900]
 screen = pygame.display.set_mode(size)
 
 Clock = pygame.time.Clock();
-
+counter = 0
 walls = [Wall([0,0]),
          Wall([75,75])]
 
@@ -40,7 +41,11 @@ while True:
                 player.goKey("sup")
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("sdown")
-        
+    
+    counter += 1
+    print(counter)
+    if counter % 100 == 0:
+        Bros += [GloopyGlob()]
     for Charter in Bros:
         Charter.update(size)
     #print(player.jumping, player.speedy)
@@ -52,7 +57,7 @@ while True:
         screen.blit(wall.image, wall.rect)
     pygame.display.flip()
     Clock.tick(60);
+   
     #print(Clock.get_fps())
 
-def GoopyGlobSpawn():
-    Bros += [Enemy(name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GooppyGlob.png")]
+

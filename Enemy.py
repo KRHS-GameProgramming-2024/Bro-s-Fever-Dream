@@ -45,7 +45,7 @@ class Charter:
             self.rect.bottom = height
             self.speedy = 0
             self.jumping = False
-            print("Hit Ground")
+            #print("Hit Ground")
         if not self.didBounceY:
             
             if self.rect.top < 0:
@@ -80,7 +80,7 @@ class Charter:
                         pass
 
     def update(self, size):
-        print(self.speed)
+        #print(self.speed)
         self.speedy += self.gravity
         self.move()
         self.didBounceX = False
