@@ -56,7 +56,9 @@ while True:
         else:
             Charter.update(size, Bros[0].rect.x)
     #print(player.jumping, player.speedy)
-        
+    for Collision in Bros:
+		for wall in walls:
+			Collision.wallTileCollide(wall)    
     screen.fill((255, 255, 255))
     for Bro in Bros:
         screen.blit(Bro.image, Bro.rect)
@@ -65,6 +67,6 @@ while True:
     pygame.display.flip()
     Clock.tick(60);
    
-    #print(Clock.get_fps())
+	#print(Clock.get_fps())
 
 
