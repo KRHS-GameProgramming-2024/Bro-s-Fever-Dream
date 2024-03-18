@@ -1,7 +1,7 @@
 import math, pygame, sys, random
 
 class Charter: 
-    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(0,1500),random.randint(0,900)], name = "monster", damage = "1", health = "1", image = "crazyPizza.png", doesFall = True):
+    def __init__(self, maxSpeed=4, speed = [0,0], startPos=[random.randint(100,1400),random.randint(100,800)], name = "monster", damage = "1", health = "1", image = "crazyPizza.png", doesFall = True):
         
         self.images = [pygame.image.load(image)]
         
@@ -21,9 +21,9 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         
-        self.gravity = 3
+        self.gravity = 1
         self.jumping = False
-        self.jumpHeight = 50
+        self.jumpHeight = 25
         
     
         
@@ -79,7 +79,8 @@ class Charter:
                             return True
                         pass
 
-    def update(self, size):
+    def update(self, size, playerpos):
+        self.playerpos = playerpos
         #print(self.speed)
         self.speedy += self.gravity
         self.move()

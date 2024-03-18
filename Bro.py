@@ -64,7 +64,13 @@ class Bro(Charter):
                             return True
                         pass
 
-
+    def update(self, size):
+        #print(self.speed)
+        self.speedy += self.gravity
+        self.move()
+        self.didBounceX = False
+        self.didBounceY = False
+        self.wallCollide(size)
     
         
         
