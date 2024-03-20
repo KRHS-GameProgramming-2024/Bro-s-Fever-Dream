@@ -49,7 +49,8 @@ class Bro(Charter):
             self.frame = 0
         self.image = self.images[self.frame]
 
-<<<<<<< HEAD
+
+
     def update(self, size):
         #print(self.speed)
         self.speedy += self.gravity
@@ -57,13 +58,4 @@ class Bro(Charter):
         self.didBounceX = False
         self.didBounceY = False
         self.wallCollide(size)
-    
-        
-        
-=======
 
-
-    
-        
-        
->>>>>>> origin/master

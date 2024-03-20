@@ -59,6 +59,10 @@ while True:
     for Collision in Bros:
         for wall in walls:
             Collision.wallTileCollide(wall)    
+        # ~ for wall in walls:
+            # ~ Collision.wallTileCollide(wall)
+        for Charter in Bros:
+            Collision.charterChaterCollide(Charter)
     screen.fill((255, 255, 255))
     for Bro in Bros:
         screen.blit(Bro.image, Bro.rect)
