@@ -72,10 +72,10 @@ class Charter:
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        #self.speedx = -self.speedx
+                        self.speedx = -self.speedx
                         self.speedy = -self.speedy
                         self.move()
-                        #self.speedx = 0
+                        self.speedx = 0
                         self.speedy = 0
                         self.didBounceX = True
                         self.didBounceY = True
@@ -120,4 +120,6 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         self.wallCollide(size)
+        
+
 
