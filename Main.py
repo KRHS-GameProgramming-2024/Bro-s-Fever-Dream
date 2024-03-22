@@ -46,18 +46,28 @@ while True:
                 player.goKey("sdown")
     
     counter += 1
-    print(counter)
-    if counter % 100 == 0:
+    #print(counter)
+    if counter % 300 == 0:
         Bros += [GloopyGlob()]
+        print("go")
     for Charter in Bros:
-        Charter.update(size)
+        if Charter.kind == "Bro":
+            Charter.update(size)
+        else:
+            Charter.update(size, Bros[0].rect.x)
     #print(player.jumping, player.speedy)
-        
+    for Collision in Bros:
+        for wall in walls:
+            Collision.wallTileCollide(wall)    
+        # ~ for wall in walls:
+            # ~ Collision.wallTileCollide(wall)
+        for Charter in Bros:
+            Collision.charterChaterCollide(Charter)
     screen.fill((255, 255, 255))
     for Bro in Bros:
         screen.blit(Bro.image, Bro.rect)
-    for wall in walls:
-        screen.blit(wall.image, wall.rect)
+    # ~ for wall in walls:
+        # ~ screen.blit(wall.image, wall.rect)
     pygame.display.flip()
     Clock.tick(60);
    

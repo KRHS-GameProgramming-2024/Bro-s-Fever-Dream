@@ -1,7 +1,9 @@
 import math, pygame, sys, random
+from Collisionhandler import *
 
 class Charter: 
-    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(0,1500),random.randint(0,900)], name = "monster", damage = "1", health = "1", image = "crazyPizza.png", doesFall = True):
+
+    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(200,1300),random.randint(200,700)], name = "monster", damage = 1, health = 1, weight = 50, image = "crazyPizza.png", doesFall = True):
         
         self.images = [pygame.image.load(image)]
         
@@ -21,9 +23,9 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         
-        self.gravity = 3
+        self.gravity = 1
         self.jumping = False
-        self.jumpHeight = 50
+        self.jumpHeight = 25
         
     
         
@@ -65,21 +67,53 @@ class Charter:
                 self.speedx = 0
                 self.didBounceX = True
     
-    def wallsCollide(self, other):
-        if self.rect.right > other.rect.left:
+    def wallTileCollide(self, other):
+        if self.rect.right > other.rect.left:   
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if not self.didBounceX:
-                            self.speedx = -self.speedx
-                            self.didBounceX = True
-                        if not self.didBounceY:
-                            self.speedy = -self.speedy
-                            self.didBounceY = True
-                            return True
-                        pass
-
-    def update(self, size):
+                        self.speedx = -self.speedx
+                        self.speedy = -self.speedy
+                        self.move()
+                        self.speedx = 0
+                        self.speedy = 0
+                        self.didBounceX = True
+                        self.didBounceY = True
+                        self.jumping = False
+                        return True
+                        
+    def charterChaterCollide(self, other):
+        if self != other:
+            if self.didBounceX == False:
+                if self.didBounceY == False:
+                    if self.rect.right > other.rect.left:   
+                        if self.rect.left < other.rect.right:
+                            if self.rect.bottom > other.rect.top:
+                                if self.rect.top < other.rect.bottom:
+                                    # ~ print("we're getting there")
+                                    if other.kind == "Bro" or self.kind == "Bro":
+                                        if self.rect.bottom > other.rect.top:
+                                            if not abs(self.speedy) < abs(other.speedy):
+                                                self.speedy = -self.speedy
+                                                self.move
+                                                # ~ print("a collision tried to happen here")
+                                            else:
+                                                self.speedy = other.speedy
+                                                # ~ print("a collision tried to happen here")
+                                        elif self.rect.top < other.rect.bottom:
+                                            if not abs(self.speedy) > abs(other.speedy):
+                                                self.speedy = -self.speedy
+                                                self.move
+                                                # ~ print("a collision tried to happen here")
+                                            else:
+                                                self.speedy = other.speedy
+                                                # ~ print("a collision tried to happen here")
+                                        else:
+                                            pass
+        
+                
+    def update(self, size, playerpos):
+        self.playerpos = playerpos
         #print(self.speed)
         self.speedy += self.gravity
         self.move()

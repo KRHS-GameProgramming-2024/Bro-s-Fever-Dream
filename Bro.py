@@ -1,6 +1,6 @@
 import math, pygame, sys, random
 from Enemy import *
-	
+    
 class Bro(Charter):
     def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
         Charter.__init__(self, [0,0], startPos)
@@ -48,23 +48,14 @@ class Bro(Charter):
         elif look == "left":
             self.frame = 0
         self.image = self.images[self.frame]
-        
-                
-    def wallsCollide(self, other):
-        if self.rect.right > other.rect.left:
-            if self.rect.left < other.rect.right:
-                if self.rect.bottom > other.rect.top:
-                    if self.rect.top < other.rect.bottom:
-                        if not self.didBounceX:
-                            self.speedx = -self.speedx
-                            self.didBounceX = True
-                        if not self.didBounceY:
-                            self.speedy = -self.speedy
-                            self.didBounceY = True
-                            return True
-                        pass
 
 
-    
-        
-        
+
+    def update(self, size):
+        #print(self.speed)
+        self.speedy += self.gravity
+        self.move()
+        self.didBounceX = False
+        self.didBounceY = False
+        self.wallCollide(size)
+
