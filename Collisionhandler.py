@@ -22,20 +22,16 @@ v10=4
 v20=-5
 
 def elasticCollision(m1=1, m2=2, v10=3, v20=4):
-    ke10=(m1*v10^2)/2
-    ke20=(m2*v20^2)/2
-    p10=m1*v10
-    p20=m2*v20
+    # ~ ke10=(m1*v10**2)/2
+    # ~ ke20=(m2*v20**2)/2
+    # ~ p10=m1*v10
+    # ~ p20=m2*v20
     v11=(2 * m2 * v20 + (m1 - m2) * v10)/(m1 + m2) + v10 - v20
     v21=(2 * m1 * v10 + (m2 - m1) * v20)/(m2 + m1) + v20 - v10
     # ~ ke10+ke20=ke11+ke21
     # ~ p10+p20=p11+p21
     #print(str(v11) + " is first velo" + "\n" + str(v21) + " is second velo")
-    return [
-        v11,
-        m1,
-        v21,
-        m2]
+    return v11
     
     
     
@@ -43,11 +39,7 @@ def inelasticCollision(m1=1, m2=2, v10=3, v20=4):
     v11=(m1*v10+m2*v20)/(m1+m2)
     v21=v11
     print(v11)
-    return [
-        v11,
-        m1,
-        v21,
-        m2]
+    return v11
 
 # ~ print(inelasticCollision(m1, m2, v10, v20))
 # ~ n1=inelasticCollision(m1, m2, v10, v20)

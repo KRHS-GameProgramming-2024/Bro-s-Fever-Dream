@@ -108,7 +108,9 @@ class Charter:
                                             else:
                                                 self.speedy = other.speedy
                                                 # ~ print("a collision tried to happen here")
-                                        else:
+                                        if self.rect.left < other.rect.right:
+                                            self.speedx = elasticCollision(self.weight, other.weight, self.speedx, other.speedx)
+                                        
                                             pass
         
                 

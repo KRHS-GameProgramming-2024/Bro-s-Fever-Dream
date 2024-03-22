@@ -15,6 +15,7 @@ class Bro(Charter):
         self.speedx = speed[0]
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
+        self.weight = 150
         self.kind = "Bro"
             
         self.didBounceX = False
