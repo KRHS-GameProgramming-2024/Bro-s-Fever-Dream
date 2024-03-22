@@ -1,5 +1,5 @@
 import pygame, sys, math
-from Wall import *
+from Walls import *
 
 def loadLevel(lev):
     f = open(lev, 'r')
