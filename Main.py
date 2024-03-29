@@ -4,6 +4,7 @@ from Bro import*
 from Walls import*
 from Enemy import *
 from GoopyGlob import *
+from JukeBox import *
 
 pygame.init()
 
@@ -16,6 +17,8 @@ tiles = loadLevel("levels/100.lvl")
 walls = tiles
 counter = 0
 walls = tiles
+
+music(1)
 
 player = Bro(8, [0,0], [1024/2, 768/2])
 Bros = [player]
