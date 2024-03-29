@@ -35,7 +35,7 @@ if __name__ == "__main__":
     world = 1
     levX = 0
     levY = 0
-    
+
     walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
 
     size= [1024,768]
