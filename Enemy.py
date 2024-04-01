@@ -23,6 +23,8 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         
+        self.HitWall = False
+        
         self.gravity = 1
         self.jumping = False
         self.jumpHeight = 25
@@ -72,12 +74,23 @@ class Charter:
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if self.rect.top > other.rect.top:
+                        if self.rect.top > other.rect.top or self.HitWall == True:
                             self.speedx = -self.speedx
+                            self.HitWall = False
+                            print("hit top")
                         self.speedy = -self.speedy
                         self.move()
-                        if self.rect.top > other.rect.top:
-                            self.speedx = 0
+                        if self.rect.bottom > other.rect.top:
+                            if self.rect.left < other.rect.right: 
+                                self.HitWall = True
+                                self.rect.left = other.rect.right
+                                self.speedx = 0
+                                print("left hit")
+                            if self.rect.right > other.rect.left:
+                                self.HitWall = True
+                                self.rect.right = other.rect.left
+                                self.speedx = 0
+                                print("right hit")
                         self.speedy = 0
                         self.didBounceX = True
                         self.didBounceY = True

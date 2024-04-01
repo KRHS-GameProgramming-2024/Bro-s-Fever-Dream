@@ -13,7 +13,7 @@ screen = pygame.display.set_mode(size)
 
 Clock = pygame.time.Clock();
 
-tiles = loadLevel("levels/100.lvl")
+tiles = loadLevel("levels/Template.lvl")
 walls = tiles
 counter = 0
 walls = tiles
@@ -51,7 +51,7 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        Bros += [GloopyGlob()]
+          #Bros += [GloopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
