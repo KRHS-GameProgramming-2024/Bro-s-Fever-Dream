@@ -23,8 +23,6 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         
-        self.HitWall = False
-        
         self.gravity = 1
         self.jumping = False
         self.jumpHeight = 25
@@ -74,23 +72,26 @@ class Charter:
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if self.rect.top > other.rect.top or self.HitWall == True:
+                        if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 25:
                             self.speedx = -self.speedx
-                            self.HitWall = False
-                            print("hit top")
+                            print("weeeee")
                         self.speedy = -self.speedy
                         self.move()
-                        if self.rect.bottom > other.rect.top:
-                            if self.rect.left < other.rect.right: 
-                                self.HitWall = True
-                                self.rect.left = other.rect.right
-                                self.speedx = 0
-                                print("left hit")
-                            if self.rect.right > other.rect.left:
-                                self.HitWall = True
-                                self.rect.right = other.rect.left
-                                self.speedx = 0
-                                print("right hit")
+                        if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 1:
+                            self.speedx = 0
+                            print("wooooo")
+                            #self.speedx = -self.speedx
+                            #print("hit top")
+                            # ~ if self.rect.left > other.rect.right: 
+                                # ~ self.HitWall = True
+                                # ~ self.rect.left = other.rect.right
+                                # ~ self.speedx = 0
+                                # ~ print("left hit")
+                            # ~ if self.rect.right < other.rect.left:
+                                # ~ self.HitWall = True
+                                # ~ self.rect.right = other.rect.left
+                                # ~ self.speedx = 0
+                                # ~ print("right hit")
                         self.speedy = 0
                         self.didBounceX = True
                         self.didBounceY = True

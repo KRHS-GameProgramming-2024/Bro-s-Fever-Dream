@@ -2,7 +2,6 @@ import pygame
 pygame.init()
 pygame.mixer.init()
 
-SONGEND = pygame.USEREVENT
 
 if music == "1":
     pygame.mixer.music.load("CaveThemeIntro.mp3")
