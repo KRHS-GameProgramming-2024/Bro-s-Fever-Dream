@@ -5,6 +5,8 @@ class GloopyGlob(Charter):
         Charter.__init__(self, name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GoopyGlob.png")
         self.gravity = 2
         self.didBounceY = False
+        
+        self.kind = "GoopyGlob"
     
         
     def move(self):
