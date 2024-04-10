@@ -3,7 +3,7 @@ from Collisionhandler import *
 
 class Charter: 
 
-    def __init__(self, maxSpeed=4, speed = [8,8], startPos=[random.randint(200,1300),random.randint(200,700)], name = "monster", damage = 1, health = 1, weight = 50, image = "crazyPizza.png", doesFall = True):
+    def __init__(self, maxSpeed=4, speed = [8,8], startPos = [200,200], name = "monster",  image = "crazyPizza.png", doesFall = True):
         
         self.images = [pygame.image.load(image)]
         
@@ -17,8 +17,9 @@ class Charter:
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
         self.kind = "Enemy"
-
-
+        self.weight = 1
+        self.standing = False
+        self.slam = False
 
         self.didBounceX = False
         self.didBounceY = False
@@ -101,6 +102,7 @@ class Charter:
                             self.didBounceX = True
                             self.didBounceY = True
                             self.jumping = False
+                            if int(self.rect.bottom) == int(other.rect.top) - 1: self.standing = True
                             return True
                         
     def charterChaterCollide(self, other):
@@ -111,28 +113,14 @@ class Charter:
                         if self.rect.left < other.rect.right:
                             if self.rect.bottom > other.rect.top:
                                 if self.rect.top < other.rect.bottom:
-                                    # ~ print("we're getting there")
-                                    if other.kind == "Bro" or self.kind == "Bro":
-                                        if self.rect.bottom > other.rect.top:
-                                            if not abs(self.speedy) < abs(other.speedy):
-                                                self.speedy = -self.speedy
-                                                self.move
-                                                # ~ print("a collision tried to happen here")
-                                            else:
-                                                self.speedy = other.speedy
-                                                # ~ print("a collision tried to happen here")
-                                        elif self.rect.top < other.rect.bottom:
-                                            if not abs(self.speedy) > abs(other.speedy):
-                                                self.speedy = -self.speedy
-                                                self.move
-                                                # ~ print("a collision tried to happen here")
-                                            else:
-                                                self.speedy = other.speedy
-                                                # ~ print("a collision tried to happen here")
-                                        if self.rect.left < other.rect.right:
+                                    if self.kind == "Bro" or other.kind == "Bro":
+                                        if self.rect.center != other.rect.center:
                                             self.speedx = elasticCollision(self.weight, other.weight, self.speedx, other.speedx)
-                                        
-                                            pass
+                                            if other.standing == False:
+                                                self.speedy = elasticCollision(self.weight, other.weight, self.speedy, other.speedy)
+                                            self.move()
+                                            self.slam = True
+                                            
         
                 
     def update(self, size, playerpos):
@@ -143,6 +131,10 @@ class Charter:
         self.didBounceX = False
         self.didBounceY = False
         self.wallCollide(size)
+        self.standing = False
+        self.slam = False
+        
+    
         
 
 

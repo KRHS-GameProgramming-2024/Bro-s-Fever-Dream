@@ -2,10 +2,12 @@ from Enemy import *
 
 class GloopyGlob(Charter):
     def __init__(self):
-        Charter.__init__(self, name = "Goopy Glob", damage = random.randint(1,6), health = 50, image = "Earth\GoopyGlob\Images\GoopyGlob.png")
+        Charter.__init__(self, name = "Goopy Glob", image = "Earth\GoopyGlob\Images\GoopyGlob.png")
         self.gravity = 2
         self.weight = 28
         self.didBounceY = False
+        self.damage = random.randint(1,6)
+        self.health = 50
         
         self.kind = "GoopyGlob"
     
