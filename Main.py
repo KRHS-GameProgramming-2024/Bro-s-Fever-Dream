@@ -4,6 +4,7 @@ from Bro import*
 from Walls import*
 from Enemy import *
 from GoopyGlob import *
+from JukeBox import *
 
 pygame.init()
 
@@ -12,10 +13,12 @@ screen = pygame.display.set_mode(size)
 
 Clock = pygame.time.Clock();
 
-tiles = loadLevel("levels/100.lvl")
+tiles = loadLevel("levels/Template.lvl")
 walls = tiles
 counter = 0
 walls = tiles
+
+music(1)
 
 player = Bro(8, [0,0], [1024/2, 768/2])
 Bros = [player]
@@ -48,7 +51,7 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        Bros += [GloopyGlob()]
+        #Bros += [GloopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":

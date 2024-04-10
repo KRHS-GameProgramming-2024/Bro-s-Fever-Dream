@@ -6,6 +6,8 @@ class GloopyGlob(Charter):
         self.gravity = 2
         self.weight = 28
         self.didBounceY = False
+        
+        self.kind = "GoopyGlob"
     
         
     def move(self):

@@ -72,17 +72,36 @@ class Charter:
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if self.rect.top > other.rect.top:
-                            self.speedx = -self.speedx
-                        self.speedy = -self.speedy
-                        self.move()
-                        if self.rect.top > other.rect.top:
-                            self.speedx = 0
-                        self.speedy = 0
-                        self.didBounceX = True
-                        self.didBounceY = True
-                        self.jumping = False
-                        return True
+                        if self.kind == "Bro":
+                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 25:
+                                self.speedx = -self.speedx
+                                print("weeeee")
+                            self.speedy = -self.speedy
+                            self.move()
+                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 1:
+                                self.speedx = 0
+                                print("wooooo")
+                            self.speedy = 0
+                            self.didBounceX = True
+                            self.didBounceY = True
+                            if not self.rect.bottom > other.rect.top:
+                                print("jump")
+                                self.jumping = False
+                            return True
+                        if self.kind == "GoopyGlob":
+                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
+                                self.speedx = -self.speedx
+                                print("wheeeee")
+                            self.speedy = -self.speedy
+                            self.move()
+                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
+                                self.speedx = 0
+                                print("whooooo")
+                            self.speedy = 0
+                            self.didBounceX = True
+                            self.didBounceY = True
+                            self.jumping = False
+                            return True
                         
     def charterChaterCollide(self, other):
         if self != other:
