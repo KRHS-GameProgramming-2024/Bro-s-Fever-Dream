@@ -74,30 +74,36 @@ class Charter:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
                         if self.kind == "Bro":
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 25:
+                            if self.rect.bottom > other.rect.top + 25:
                                 self.speedx = -self.speedx
                                 print("weeeee")
                             self.speedy = -self.speedy
                             self.move()
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top + 1:
+                            if self.rect.bottom > other.rect.top + 1:
                                 self.speedx = 0
                                 print("wooooo")
+                            if self.rect.right > other.rect.left:   
+                                if self.rect.left < other.rect.right:
+                                    if self.rect.bottom > other.rect.top:
+                                        if self.rect.top < other.rect.bottom:
+                                            self.rect.bottom = other.rect.top
+                                            print("Get out of wall")
                             self.speedy = 0
                             self.didBounceX = True
                             self.didBounceY = True
                             if not self.rect.bottom > other.rect.top:
-                                print("jump")
+                                #print("jump")
                                 self.jumping = False
                             return True
                         if self.kind == "GoopyGlob":
                             if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
                                 self.speedx = -self.speedx
-                                print("wheeeee")
+                                #print("wheeeee")
                             self.speedy = -self.speedy
                             self.move()
                             if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
                                 self.speedx = 0
-                                print("whooooo")
+                                #print("whooooo")
                             self.speedy = 0
                             self.didBounceX = True
                             self.didBounceY = True
