@@ -84,7 +84,9 @@ class Charter:
                             self.speedy = 0
                             self.didBounceX = True
                             self.didBounceY = True
-                            self.jumping = False
+                            if not self.rect.bottom > other.rect.top:
+                                print("jump")
+                                self.jumping = False
                             return True
                         if self.kind == "GoopyGlob":
                             if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
