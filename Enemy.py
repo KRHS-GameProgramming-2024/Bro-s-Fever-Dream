@@ -1,5 +1,5 @@
 import math, pygame, sys, random
-from Collisionhandler import *
+#from Collisionhandler import *
 
 class Charter: 
 
@@ -17,7 +17,7 @@ class Charter:
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
         self.kind = "Enemy"
-        self.weight = 1
+        self.mass = 1
         self.standing = False
         self.slam = False
 
@@ -121,9 +121,9 @@ class Charter:
                                 if self.rect.top < other.rect.bottom:
                                     if self.kind == "Bro" or other.kind == "Bro":
                                         if self.rect.center != other.rect.center:
-                                            self.speedx = elasticCollision(self.weight, other.weight, self.speedx, other.speedx)
+                                            self.elasticCollision(other, 'x')
                                             if other.standing == False:
-                                                self.speedy = elasticCollision(self.weight, other.weight, self.speedy, other.speedy)
+                                                self.elasticCollision(other, 'y')
                                             self.move()
                                             self.slam = True
                                             
@@ -140,7 +140,26 @@ class Charter:
         self.standing = False
         self.slam = False
         
-    
+    def elasticCollision(self, other, direction):
+        # ~ ke10=(mass1*myInitialVelocity**2)/2
+        # ~ ke20=(mass2*thierInitialVelocity**2)/2
+        # ~ p10=mass1*myInitialVelocity
+        # ~ p20=mass2*thierInitialVelocity
+        if direction == 'x':
+            myInitialVelocity = self.speedx
+            thierInitialVelocity = other.speedx
+        else:
+            myInitialVelocity = self.speedy
+            thierInitialVelocity = other.speedy
+        
+        myFinalVelocity=(2 * self.mass * myInitialVelocity + (other.mass - self.mass) * thierInitialVelocity)/(other.mass + self.mass) + thierInitialVelocity - myInitialVelocity
+        # ~ ke10+ke20=ke11+ke21
+        # ~ p10+p20=p11+p21
+        #print(str(finalVelocity1) + " is first velo" + "\n" + str(finalVelocity2) + " is second velo")
+        if direction == 'x':
+            self.speedx = myFinalVelocity
+        else:
+            self.speedy = myFinalVelocity
         
 
 

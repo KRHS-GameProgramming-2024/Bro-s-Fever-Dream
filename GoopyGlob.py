@@ -4,7 +4,7 @@ class GloopyGlob(Charter):
     def __init__(self):
         Charter.__init__(self, name = "Goopy Glob", image = "Earth\GoopyGlob\Images\GoopyGlob.png")
         self.gravity = 2
-        self.weight = 28
+        self.mass = 28
         self.didBounceY = False
         self.damage = random.randint(1,6)
         self.health = 50
