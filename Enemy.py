@@ -1,6 +1,7 @@
 import math, pygame, sys, random
 #from Collisionhandler import *
 
+
 class Charter: 
 
     def __init__(self, maxSpeed=4, speed = [8,8], startPos = [200,200], name = "monster",  image = "crazyPizza.png", doesFall = True):
@@ -19,7 +20,8 @@ class Charter:
         self.kind = "Enemy"
         self.mass = 1
         self.standing = False
-        self.slam = False
+        self.hitCounter = 0
+        self.hitAGuyX = False
 
         self.didBounceX = False
         self.didBounceY = False
@@ -41,32 +43,32 @@ class Charter:
             self.frame = 0
         self.image = self.images[self.frame]
         
-    def wallCollide(self, size):
-        width = size[0]
-        height = size[1]
-        if self.rect.bottom > height:
-            self.rect.bottom = height
-            self.speedy = 0
-            self.jumping = False
-            #print("Hit Ground")
-        if not self.didBounceY:
+    # ~ def wallCollide(self, size):
+        # ~ width = size[0]
+        # ~ height = size[1]
+        # ~ if self.rect.bottom > height:
+            # ~ self.rect.bottom = height
+            # ~ self.speedy = 0
+            # ~ self.jumping = False
+            # ~ #print("Hit Ground")
+        # ~ if not self.didBounceY:
             
-            if self.rect.top < 0:
-                self.speedy = -self.speedy
-                self.move()
-                self.speedy = 0
-                self.didBounceY = True
-        if not self.didBounceX:
-            if self.rect.right > width:
-                self.speedx = -self.speedx
-                self.move()
-                self.speedx = 0
-                self.didBounceX = True
-            if self.rect.left < 0:
-                self.speedx = -self.speedx
-                self.move()
-                self.speedx = 0
-                self.didBounceX = True
+            # ~ if self.rect.top < 0:
+                # ~ self.speedy = -self.speedy
+                # ~ self.move()
+                # ~ self.speedy = 0
+                # ~ self.didBounceY = True
+        # ~ if not self.didBounceX:
+            # ~ if self.rect.right > width:
+                # ~ self.speedx = -self.speedx
+                # ~ self.move()
+                # ~ self.speedx = 0
+                # ~ self.didBounceX = True
+            # ~ if self.rect.left < 0:
+                # ~ self.speedx = -self.speedx
+                # ~ self.move()
+                # ~ self.speedx = 0
+                # ~ self.didBounceX = True
     
     def wallTileCollide(self, other):
         if self.rect.right > other.rect.left:   
@@ -105,27 +107,37 @@ class Charter:
                                 self.speedx = 0
                                 #print("whooooo")
                             self.speedy = 0
-                            self.didBounceX = True
-                            self.didBounceY = True
+                            #self.didBounceX = True
+                            #self.didBounceY = True
                             self.jumping = False
                             if int(self.rect.bottom) == int(other.rect.top) - 1: self.standing = True
                             return True
                         
     def charterChaterCollide(self, other):
         if self != other:
-            if self.didBounceX == False:
+            if self.hitAGuyX == False:
                 if self.didBounceY == False:
+                    #print("ouch")
                     if self.rect.right > other.rect.left:   
                         if self.rect.left < other.rect.right:
                             if self.rect.bottom > other.rect.top:
                                 if self.rect.top < other.rect.bottom:
                                     if self.kind == "Bro" or other.kind == "Bro":
+                                        if other.kind == "Bro":
+                                            if other.hitCounter > 89:
+                                                other.health -= self.damage
+                                                other.hitCounter = 0
+                                        if self.kind == "Bro":
+                                            if self.hitCounter > 89:
+                                                self.health -= other.damage
+                                                self.hitCounter = 0
                                         if self.rect.center != other.rect.center:
                                             self.elasticCollision(other, 'x')
                                             if other.standing == False:
                                                 self.elasticCollision(other, 'y')
                                             self.move()
-                                            self.slam = True
+
+                                            self.hitAGuyX = False
                                             
         
                 
@@ -136,9 +148,10 @@ class Charter:
         self.move()
         self.didBounceX = False
         self.didBounceY = False
-        self.wallCollide(size)
+        # ~ self.wallCollide(size)
         self.standing = False
-        self.slam = False
+        self.hitCounter += 1
+        self.hitAGuyX = False
         
     def elasticCollision(self, other, direction):
         # ~ ke10=(mass1*myInitialVelocity**2)/2
@@ -152,7 +165,7 @@ class Charter:
             myInitialVelocity = self.speedy
             thierInitialVelocity = other.speedy
         
-        myFinalVelocity=(2 * self.mass * myInitialVelocity + (other.mass - self.mass) * thierInitialVelocity)/(other.mass + self.mass) + thierInitialVelocity - myInitialVelocity
+        myFinalVelocity=((2 * self.mass * myInitialVelocity + (other.mass - self.mass) * thierInitialVelocity)/(other.mass + self.mass) + thierInitialVelocity - myInitialVelocity)/2
         # ~ ke10+ke20=ke11+ke21
         # ~ p10+p20=p11+p21
         #print(str(finalVelocity1) + " is first velo" + "\n" + str(finalVelocity2) + " is second velo")
