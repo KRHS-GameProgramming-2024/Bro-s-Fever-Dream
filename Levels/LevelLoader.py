@@ -37,7 +37,7 @@ if __name__ == "__main__":
     levX = 0
     levY = 0
     
-    bg = Background("Cavebackground3.jpg")
+    bg = Background("Cavebackground.jpg")
 
 
 
@@ -67,14 +67,16 @@ if __name__ == "__main__":
                     levX = int(levX+1)
                     
                 elif event.key == pygame.K_1:
-                    if world >= 1:
-                        world = int(world-1)
+                        world = 1
                         levX = 0
                         levY = 0
                 
                 elif event.key == pygame.K_2:
-                    if world >= 1:
-                        world = int(world+1)
+                        world = 2
+                        levX = 0
+                        levY = 0
+                elif event.key == pygame.K_3:
+                        world = 3
                         levX = 0
                         levY = 0
 
@@ -83,8 +85,13 @@ if __name__ == "__main__":
                 except:
                     world, levX, levY = prev
                 print(str(world)+str(levX)+str(levY)+ ".lvl")
-                
-
+       
+        #if world == 1:
+           #bg = Background("Cavebackground2.jpg")
+        #if world == 2:
+            #bg = Background("Cavebackground.jpg")
+        #elif world == 3:
+           #bg = Background("Cavebackground3.jpg")
 
         screen.fill((97, 164, 229))
         screen.blit(bg.image, bg.rect)
