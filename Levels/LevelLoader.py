@@ -1,11 +1,12 @@
 import pygame, sys, math
 from Walls import *
+from Background import *
 
 def loadLevel(lev):
     f = open(lev, 'r')
     lines = f.readlines()
     f.close()
-
+        
     size = 32
     offset = size/2
     tiles = []
@@ -35,6 +36,10 @@ if __name__ == "__main__":
     world = 1
     levX = 0
     levY = 0
+    
+    bg = Background("Cavebackground3.jpg")
+
+
 
     walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
 
@@ -78,9 +83,14 @@ if __name__ == "__main__":
                 except:
                     world, levX, levY = prev
                 print(str(world)+str(levX)+str(levY)+ ".lvl")
+                
+
 
         screen.fill((97, 164, 229))
+        screen.blit(bg.image, bg.rect)
         for wall in walls:
             screen.blit(wall.image, wall.rect)
+            
+
         pygame.display.flip()
         clock.tick(60)
