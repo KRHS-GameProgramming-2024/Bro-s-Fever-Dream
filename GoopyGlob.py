@@ -6,7 +6,7 @@ class GloopyGlob(Charter):
         self.gravity = 2
         self.mass = 28
         self.didBounceY = False
-        self.damage = random.randint(1,6)
+        self.damage = random.randint(1,100)
         self.health = 50
         
         self.kind = "GoopyGlob"

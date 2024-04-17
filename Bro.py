@@ -17,14 +17,22 @@ class Bro(Charter):
         self.speedx = speed[0]
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
-        self.weight = 150
+        self.weight = 15
         self.kind = "Bro"
-        
+        self.health = 100
+        self.maxHealth = 100
+        self.damage = 0
+        self.hitCounter = 0
         self.run = "none"
             
         self.didBounceX = False
         self.didBounceY = False
-   
+        
+    def regen(self):
+        if self.health < self.maxHealth:
+            if self.hitCounter > 499:
+                if self.hitCounter % 25 == 0:
+                    self.health += 1
                 
     def goKey(self, direction):
         if direction == "left":
@@ -76,13 +84,13 @@ class Bro(Charter):
             self.frame = 0
         self.image = self.images[self.frame]
 
-
-
     def update(self, size):
         #print(self.speed)
         self.speedy += self.gravity
         self.move()
         self.didBounceX = False
         self.didBounceY = False
-        self.wallCollide(size)
+        # ~ self.wallCollide(size)
+        self.hitCounter += 1
+        self.regen()
 

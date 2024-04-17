@@ -5,6 +5,7 @@ from Walls import*
 from Enemy import *
 from GoopyGlob import *
 from JukeBox import *
+from Hud import *
 
 pygame.init()
 
@@ -17,11 +18,13 @@ tiles = loadLevel("levels/Template.lvl")
 walls = tiles
 counter = 0
 walls = tiles
+Health = Hud("health", [500,500])
 
 music(1)
 
 player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -63,6 +66,7 @@ while True:
             Charter.update(size)
         else:
             Charter.update(size, Bros[0].rect.x)
+    Health.update(player.health)
     #print(player.jumping, player.speedy)
     for Collision in Bros:
         for wall in walls:
@@ -76,6 +80,7 @@ while True:
         screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
+    screen.blit(Health.image, Health.rect)
     pygame.display.flip()
     Clock.tick(60);
    
