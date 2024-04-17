@@ -152,7 +152,7 @@ class Charter:
             myInitialVelocity = self.speedy
             thierInitialVelocity = other.speedy
         
-        myFinalVelocity=(2 * self.mass * myInitialVelocity + (other.mass - self.mass) * thierInitialVelocity)/(other.mass + self.mass) + thierInitialVelocity - myInitialVelocity
+        myFinalVelocity=((2 * self.mass * myInitialVelocity + (other.mass - self.mass) * thierInitialVelocity)/(other.mass + self.mass) + thierInitialVelocity - myInitialVelocity)/2
         # ~ ke10+ke20=ke11+ke21
         # ~ p10+p20=p11+p21
         #print(str(finalVelocity1) + " is first velo" + "\n" + str(finalVelocity2) + " is second velo")

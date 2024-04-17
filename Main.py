@@ -20,13 +20,14 @@ walls = tiles
 
 music(1)
 
-player = Bro(8, [0,0], [1024/2, 768/2])
+player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit();
         elif event.type == pygame.KEYDOWN:
+            print(event.key)
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.goKey("left")
                 player.look("left")
@@ -38,6 +39,8 @@ while True:
                 print(player.jumping, player.speedy)
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("down")
+            elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
+                player.goKey("run")
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.goKey("sleft")
@@ -47,11 +50,13 @@ while True:
                 player.goKey("sup")
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("sdown")
+            elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
+                player.goKey("srun")
     
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        Bros += [GloopyGlob()]
+        #Bros += [GloopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
