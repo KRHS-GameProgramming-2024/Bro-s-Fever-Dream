@@ -6,6 +6,7 @@ from Enemy import *
 from GoopyGlob import *
 from JukeBox import *
 from Hud import *
+from HealthBar import *
 
 pygame.init()
 
@@ -18,7 +19,8 @@ tiles = loadLevel("levels/Template.lvl")
 walls = tiles
 counter = 0
 walls = tiles
-Health = Hud("health", [500,500])
+Health = Hud("Health: ", [500,500])
+HealthBar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
 music(1)
 
@@ -59,14 +61,17 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        #Bros += [GloopyGlob()]
+        Bros += [GloopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
             Charter.update(size)
         else:
             Charter.update(size, Bros[0].rect.x)
+    Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
+    #if player.health <= 0:
+        #quit()
     #print(player.jumping, player.speedy)
     for Collision in Bros:
         for wall in walls:
@@ -81,6 +86,7 @@ while True:
     for wall in walls:
         screen.blit(wall.image, wall.rect)
     screen.blit(Health.image, Health.rect)
+    screen.blit(HealthBar.image, HealthBar.rect)
     pygame.display.flip()
     Clock.tick(60);
    
