@@ -19,6 +19,7 @@ tiles = loadLevel("levels/Template.lvl")
 walls = tiles
 counter = 0
 walls = tiles
+Death = Hud("", [1024/2 - 30, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
@@ -70,11 +71,12 @@ while True:
             Charter.update(size, Bros[0].rect.x)
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
+    Death.update("")
     Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
     if player.health > 0:
-	    Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
+        Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
-        quit()
+        Death.update("You Died")
     #print(player.jumping, player.speedy)
     for Collision in Bros:
         for wall in walls:
@@ -88,7 +90,7 @@ while True:
         screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
-    #screen.blit(Health.image, Health.rect)
+    screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
     pygame.display.flip()
     Clock.tick(60);
