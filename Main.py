@@ -13,12 +13,12 @@ pygame.init()
 size = [1024,768]
 screen = pygame.display.set_mode(size)
 
-backgrounds = [pygame.image.load("Backgrounds/Cavebackground1"),
-pygame.image.load("Backgrounds/Cavebackground2"),
-pygame.image.load("Backgrounds/Cavebackground3"),
-pygame.image.load("Backgrounds/SurfaceNight"),
-pygame.image.load("Backgrounds/SurfaceSunLow"),
-pygame.image.load("Backgrounds/SurfaceDay")
+backgrounds = [pygame.image.load("Backgrounds/Cavebackground1.jpg"),
+pygame.image.load("Backgrounds/Cavebackground2.jpg"),
+pygame.image.load("Backgrounds/Cavebackground3.jpg"),
+pygame.image.load("Backgrounds/SurfaceNight.jpg"),
+pygame.image.load("Backgrounds/SurfaceDawn+Dusk.jpg"),
+pygame.image.load("Backgrounds/SurfaceDay.png")
 ]
 
 Clock = pygame.time.Clock();
