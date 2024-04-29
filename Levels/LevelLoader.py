@@ -37,7 +37,7 @@ if __name__ == "__main__":
     levX = 0
     levY = 0
 
-    bg = Background("Cavebackground.jpg")
+    bg = Background("Cavebackground1.jpg")
 
 
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         if world == 1:
            bg = Background("Cavebackground2.jpg")
         if world == 2:
-            bg = Background("IMG_4196.jpg")
+            bg = Background("SurfaceNight.jpg")
         elif world == 3:
            bg = Background("Cavebackground3.jpg")
 
