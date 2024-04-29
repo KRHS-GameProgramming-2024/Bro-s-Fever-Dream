@@ -13,6 +13,14 @@ pygame.init()
 size = [1024,768]
 screen = pygame.display.set_mode(size)
 
+backgrounds = [pygame.image.load("Backgrounds/Cavebackground1"),
+pygame.image.load("Backgrounds/Cavebackground2"),
+pygame.image.load("Backgrounds/Cavebackground3"),
+pygame.image.load("Backgrounds/SurfaceNight"),
+pygame.image.load("Backgrounds/SurfaceSunLow"),
+pygame.image.load("Backgrounds/SurfaceDay")
+]
+
 Clock = pygame.time.Clock();
 
 tiles = loadLevel("levels/Template.lvl")
