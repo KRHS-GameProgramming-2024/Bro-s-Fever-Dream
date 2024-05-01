@@ -3,7 +3,7 @@ from Walls import *
 from Background import *
 
 def loadLevel(lev):
-    f = open(lev, 'r')
+    f = open("Levels/"+lev, 'r')
     lines = f.readlines()
     f.close()
         
@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
 
 
-    walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+    walls = loadLevel( str(world)+str(levX)+str(levY)+ ".lvl")
 
     size= [1024,768]
     screen = pygame.display.set_mode(size)

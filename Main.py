@@ -23,7 +23,12 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 
 Clock = pygame.time.Clock();
 
-tiles = loadLevel("levels/Template.lvl")
+
+world = 1
+levX = 0
+levY = 0
+
+tiles = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
 walls = tiles
 counter = 0
 walls = tiles
@@ -35,6 +40,7 @@ music(1)
 
 player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
+
 
 while True:
     for event in pygame.event.get():
