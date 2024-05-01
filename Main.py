@@ -24,6 +24,7 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 
 Clock = pygame.time.Clock();
 
+Stones = []
 GraveCount = 0
 
 world = 1
@@ -85,6 +86,8 @@ while True:
             Charter.update(size)
         else:
             Charter.update(size, Bros[0].rect.x)
+    for Grave in Stones:
+        Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
     Death.update("")
@@ -94,7 +97,7 @@ while True:
     else:
         Death.update("You Died")
         if GraveCount == 0:
-            Bros += [Gravestone()]
+            Stones += [Gravestone(player.rect.center)]
             GraveCount = 1
         else:
             pass
@@ -106,11 +109,16 @@ while True:
             Collision.wallTileCollide(wall)
         for Charter in Bros:
             Collision.charterChaterCollide(Charter)
-    screen.fill((255, 255, 255))
+    for wall in walls:
+        for Grave in Stones:
+            Grave.wallTileCollide(wall)
+    screen.blit(backgrounds[0], [0,0])
     for Bro in Bros:
         screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
+    for Grave in Stones:
+        screen.blit(Grave.image, Grave.rect)
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
     pygame.display.flip()

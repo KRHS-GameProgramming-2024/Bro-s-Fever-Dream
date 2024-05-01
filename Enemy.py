@@ -4,7 +4,7 @@ import math, pygame, sys, random
 
 class Charter: 
 
-    def __init__(self, maxSpeed=4, speed = [8,8], startPos = [300,200], name = "monster",  image = "crazyPizza.png", doesFall = True):
+    def __init__(self, maxSpeed=4, speed = [8,8], startPos = [300,500], name = "monster",  image = "crazyPizza.png", doesFall = True):
         
         self.images = [pygame.image.load(image)]
         
@@ -75,7 +75,7 @@ class Charter:
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if self.kind == "Bro" or self.kind == "Gravestone":
+                        if self.kind == "Bro":
                             if self.rect.bottom > other.rect.top + 25:
                                 self.speedx = -self.speedx
                                 print("weeeee")
