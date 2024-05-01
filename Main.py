@@ -4,6 +4,7 @@ from Bro import*
 from Walls import*
 from Enemy import *
 from GoopyGlob import *
+from Gravestone import *
 from JukeBox import *
 from Hud import *
 from HealthBar import *
@@ -23,6 +24,7 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 
 Clock = pygame.time.Clock();
 
+GraveCount = 0
 
 world = 1
 levX = 0
@@ -91,6 +93,11 @@ while True:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
         Death.update("You Died")
+        if GraveCount == 0:
+            Bros += [Gravestone()]
+            GraveCount = 1
+        else:
+            pass
     #print(player.jumping, player.speedy)
     for Collision in Bros:
         for wall in walls:
