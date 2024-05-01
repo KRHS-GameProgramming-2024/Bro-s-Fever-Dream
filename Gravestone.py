@@ -14,6 +14,8 @@ class Gravestone():
         self.rect.center = startPos
         self.kind = "Gravestone"
         
+        self.hit = True
+        
     def move(self):
         self.speedx = 0
         self.rect = self.rect.move(self.speedx, self.speedy)
@@ -23,6 +25,10 @@ class Gravestone():
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
+                        if self.hit == True:
+                            effect = pygame.mixer.Sound("Music/NoahsHandHitTableGoBoomMakeGraveSoundThatIsLoud.mp3")
+                            effect.play()
+                            self.hit = False
                         self.speedx = -self.speedx
                         self.speedy = -self.speedy
                         self.move()
