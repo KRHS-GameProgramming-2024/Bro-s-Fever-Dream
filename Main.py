@@ -35,9 +35,9 @@ tiles = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
 walls = tiles
 counter = 0
 walls = tiles
-Death = Hud("", [1024/2 - 30, 768/2])
+Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
-Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
+Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
 music(1)
 
@@ -90,12 +90,12 @@ while True:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
-    Death.update("")
-    Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
+
+    Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
     if player.health > 0:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
-        Death.update("You Died")
+        Death.update(pygame.image.load("Bro/Images/YouDied.png"))
         if GraveCount == 0:
             Stones += [Gravestone(player.rect.center)]
             GraveCount = 1

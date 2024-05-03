@@ -1,6 +1,6 @@
 import pygame, sys, math
 
-class HealthBar():
+class ImageHud():
     def __init__(self, baseImage, position = [0, 0]):
         self.baseImage = pygame.image.load("Bro/Images/HealthBar.png")
         self.image = self.baseImage
