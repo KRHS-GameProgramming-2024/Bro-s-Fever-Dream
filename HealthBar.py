@@ -2,7 +2,7 @@ import pygame, sys, math
 
 class ImageHud():
     def __init__(self, baseImage, position = [0, 0]):
-        self.baseImage = pygame.image.load("Bro/Images/HealthBar.png")
+        self.baseImage = pygame.image.load("BaseImage.png")
         self.image = self.baseImage
         self.rect = self.image.get_rect(topleft = position)
 

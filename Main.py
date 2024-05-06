@@ -38,6 +38,7 @@ walls = tiles
 Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
+PlayerLiving = True
 
 music(1)
 
@@ -96,6 +97,7 @@ while True:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
         Death.update(pygame.image.load("Bro/Images/YouDied.png"))
+        PlayerLiving = False
         if GraveCount == 0:
             Stones += [Gravestone(player.rect.center)]
             GraveCount = 1
@@ -114,7 +116,11 @@ while True:
             Grave.wallTileCollide(wall)
     screen.blit(backgrounds[0], [0,0])
     for Bro in Bros:
-        screen.blit(Bro.image, Bro.rect)
+        if Bro.kind == "Bro":
+            if PlayerLiving == True:
+                screen.blit(Bro.image, Bro.rect)
+        if Bro.kind == "GoopyGlob":
+            screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
     for Grave in Stones:
