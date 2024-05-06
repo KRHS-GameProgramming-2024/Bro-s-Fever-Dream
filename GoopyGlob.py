@@ -1,6 +1,6 @@
 from Enemy import *
 
-class GloopyGlob(Charter):
+class GoopyGlob(Charter):
     def __init__(self):
         Charter.__init__(self, name = "Goopy Glob", image = "Earth\GoopyGlob\Images\GoopyGlob.png")
         self.gravity = 2

@@ -80,7 +80,7 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        Bros += [GloopyGlob()]
+        Bros += [GoopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
