@@ -124,11 +124,11 @@ class Charter:
                                 if self.rect.top < other.rect.bottom:
                                     if self.kind == "Bro" or other.kind == "Bro":
                                         if other.kind == "Bro":
-                                            if other.hitCounter > 89:
+                                            if other.hitCounter > 30:
                                                 other.health -= self.damage
                                                 other.hitCounter = 0
                                         if self.kind == "Bro":
-                                            if self.hitCounter > 89:
+                                            if self.hitCounter > 30:
                                                 self.health -= other.damage
                                                 self.hitCounter = 0
                                         if self.rect.center != other.rect.center:
