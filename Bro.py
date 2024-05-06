@@ -11,37 +11,71 @@ class Bro(Charter):
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect()
         self.rect = self.rect.move(startPos)
-        self.maxSpeed = maxSpeed
+        self.baseSpeed = maxSpeed
+        self.maxSpeedx = maxSpeed
+        self.maxSpeedy = maxSpeed
         self.speedx = speed[0]
         self.speedy = speed[1]
         self.speed = [self.speedx, self.speedy]
-        self.weight = 150
+        self.weight = 15
         self.kind = "Bro"
+        self.health = 100
+        self.maxHealth = 100
+        self.damage = 0
+        self.hitCounter = 0
+        self.run = "none"
             
         self.didBounceX = False
         self.didBounceY = False
         
-   
+    def regen(self):
+        if self.health < self.maxHealth:
+            if self.hitCounter > 499:
+                if self.hitCounter % 25 == 0:
+                    self.health += 1
                 
     def goKey(self, direction):
         if direction == "left":
-            self.speedx = -self.maxSpeed
+            self.speedx = -self.maxSpeedx
+            self.run = "left"
         elif direction == "right":
-            self.speedx = self.maxSpeed
+            self.speedx = self.maxSpeedx
+            self.run = "right"
         elif direction == "up" and not self.jumping:
+            print("jumping")
             self.jumping = True
             self.speedy = -self.jumpHeight
         elif direction == "down":
-            self.speedy = self.maxSpeed
+            self.speedy = self.maxSpeedy
         elif direction == "sleft":
-            self.speedx = 0
+            if self.run == "left":
+                self.speedx = 0
+                self.run = "none"
         elif direction == "sright":
-            self.speedx = 0
+            if self.run == "right":
+                self.speedx = 0
+                self.run = "none"
         elif direction == "sup":
             # ~ self.speedy = 0
             pass
         elif direction == "sdown":
             self.speedy = 0
+        elif direction == "run":
+            self.maxSpeedx = self.baseSpeed+1
+            if self.run == "left":
+                self.speedx = -self.maxSpeedx
+            if self.run == "right":
+                self.speedx = self.maxSpeedx
+            elif self.run == "none":
+                pass
+        elif direction == "srun":
+            self.maxSpeedx = self.baseSpeed-1
+            if self.run == "left":
+                self.speedx = -self.maxSpeedx
+            if self.run == "right":
+                self.speedx = self.maxSpeedx
+            elif self.run == "none":
+                pass
     
     def look(self, look):
         if look == "right":
@@ -50,13 +84,13 @@ class Bro(Charter):
             self.frame = 0
         self.image = self.images[self.frame]
 
-
-
     def update(self, size):
         #print(self.speed)
         self.speedy += self.gravity
         self.move()
         self.didBounceX = False
         self.didBounceY = False
-        self.wallCollide(size)
+        # ~ self.wallCollide(size)
+        self.hitCounter += 1
+        self.regen()
 
