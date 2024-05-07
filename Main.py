@@ -30,6 +30,7 @@ GraveCount = 0
 world = 1
 levX = 0
 levY = 0
+LevelChange = False
 
 tiles = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
 walls = tiles
@@ -47,6 +48,7 @@ Bros = [player]
 
 
 while True:
+    prev = (world, levX, levY)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit();
@@ -76,7 +78,59 @@ while True:
                 player.goKey("sdown")
             elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                 player.goKey("srun")
-    
+                
+    if player.rect[0] > 1024:
+            levY = int(levY+1)
+            player.rect[0] = 0
+            LevelChange = True
+                
+    elif player.rect[0] < 0:
+            if levY > 0:
+                levY = int(levY-1)
+            player.rect[0] = 1024
+            LevelChange = True
+
+    elif player.rect[1] < 0:
+            if levX > 0:
+                levX = int(levX-1)
+            player.rect[1] = 768
+            LevelChange = True
+
+    elif player.rect[1] > 768:
+            levX = int(levX+1)
+            player.rect[1] = 0
+            LevelChange = True
+
+    # ~ elif event.key == pygame.K_1:
+            # ~ world = 1
+            # ~ levX = 0
+            # ~ levY = 0
+
+    # ~ elif event.key == pygame.K_2:
+            # ~ world = 2
+            # ~ levX = 0
+            # ~ levY = 0
+
+    # ~ elif event.key == pygame.K_3:
+            # ~ world = 3
+            # ~ levX = 0
+            # ~ levY = 0
+
+    if LevelChange == True:
+        try:
+            walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+            LevelChange = False
+        except:
+            world, levX, levY = prev
+    #print(str(world)+str(levX)+str(levY)+ ".lvl")       
+        
+    # ~ if world == 1:
+        # ~ bg = Background("Cavebackground2.jpg")
+    # ~ if world == 2:
+        # ~ bg = Background("SurfaceNight.jpg")
+    # ~ elif world == 3:
+        # ~ bg = Background("Cavebackground3.jpg")
+
     counter += 1
     #print(counter)
     if counter % 300 == 0:
