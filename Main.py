@@ -1,13 +1,43 @@
 import math, pygame, sys, random
-from LevelLoader import *
-from Bro import*
-from Walls import*
-from Enemy import *
-from GoopyGlob import *
+#enemies
 from Gravestone import *
-from JukeBox import *
-from Hud import *
+from Enemy import *
+    #air
+    
+    #earth
+from GoopyGlob import *    
+    #fire
+    
+    #water
+    
+#friendlies
+    #player
+from Bro import*
+    #NPCs
+
+#weapons
+from Weapons import *
+    #daggers
+from SoupLadle import *
+    #swords
+    
+    #ranged
+
+#action files
+    #interfaces
 from HealthBar import *
+from Hud import *
+    #world load and generation
+from Walls import*
+from LevelLoader import *
+from JukeBox import *
+
+
+
+
+
+
+
 
 pygame.init()
 
@@ -45,8 +75,14 @@ music(1)
 
 player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
-
-
+weaponsActive = []
+def use(self, direction):
+    if using == True:
+        weaponsActive += self.equipped
+        player.equipped.animate()
+        using = False
+        print("see soupp ladle if nothing else happened.")
+        
 while True:
     prev = (world, levX, levY)
     for event in pygame.event.get():
@@ -78,6 +114,14 @@ while True:
                 player.goKey("sdown")
             elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                 player.goKey("srun")
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[2]:
+                print("mouse click works")
+                weaponsActive += [SoupLadle(player.rect.center)]
+                print("see soupp ladle if nothing else happened.")
+
+    #print(event.button)
+    
                 
     if player.rect[0] > 1024:
             levY = int(levY+1)
@@ -145,8 +189,8 @@ while True:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
-
-    Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
+    Death.update("")
+    Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
     if player.health > 0:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
@@ -179,11 +223,20 @@ while True:
         screen.blit(wall.image, wall.rect)
     for Grave in Stones:
         screen.blit(Grave.image, Grave.rect)
+
+    for weapon in weaponsActive:
+        screen.blit(weapon.image, weapon.rect)
+        weapon.update(player)
+        if weapon.kind == "Dagger": 
+            print("ok so we got the kind now")
+            if weapon.change > 6: 
+                print("dawg what")
+                weaponsActive.remove(weapon)
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
     pygame.display.flip()
     Clock.tick(60);
    
     #print(Clock.get_fps())
-
+#
 

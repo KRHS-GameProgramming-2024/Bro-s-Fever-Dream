@@ -138,7 +138,8 @@ class Charter:
                                             self.move()
 
                                             self.hitAGuyX = False
-                                            
+                                    if other.kind == "dagger":
+                                        self.speedX = other.mass
         
                 
     def update(self, size, playerpos):
