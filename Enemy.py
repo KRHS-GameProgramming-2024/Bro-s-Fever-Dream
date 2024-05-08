@@ -76,14 +76,16 @@ class Charter:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
                         if self.kind == "Bro":
-                            if self.rect.bottom > other.rect.top + 25:
-                                self.speedx = -self.speedx
-                                print("weeeee")
+                            if self.rect.top > other.rect.top and self.rect.right > other.rect.left and self.rect.left < other.rect.right:
+                                print("waaaaaa")
+                            if self.rect.bottom > other.rect.top + 30:
+                                    self.speedx = -self.speedx
+                                    print("weeeee")
                             self.speedy = -self.speedy
                             self.move()
                             if self.rect.bottom > other.rect.top + 1:
-                                self.speedx = 0
-                                print("wooooo")
+                                    self.speedx = 0
+                                    print("wooooo")
                             if self.rect.right > other.rect.left:   
                                 if self.rect.left < other.rect.right:
                                     if self.rect.bottom > other.rect.top:

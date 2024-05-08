@@ -32,6 +32,7 @@ class Bro(Charter):
         self.damage = 0
         self.hitCounter = 0
         self.run = "none"
+        self.living = True
         self.equipped = SoupLadle(self.rect.center)
             
         self.didBounceX = False
