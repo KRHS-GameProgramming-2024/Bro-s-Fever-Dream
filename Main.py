@@ -189,8 +189,8 @@ while True:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
-    Death.update("")
-    Healthbar = HealthBar(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
+    # ~ Death.update("")
+    Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
     if player.health > 0:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
@@ -209,6 +209,8 @@ while True:
             Collision.wallTileCollide(wall)
         for Charter in Bros:
             Collision.charterChaterCollide(Charter)
+            for weapon in weaponsActive:
+                Collision.charterWeaponCollide(weapon)
     for wall in walls:
         for Grave in Stones:
             Grave.wallTileCollide(wall)
@@ -228,9 +230,9 @@ while True:
         screen.blit(weapon.image, weapon.rect)
         weapon.update(player)
         if weapon.kind == "Dagger": 
-            print("ok so we got the kind now")
+            # ~ print("ok so we got the kind now")
             if weapon.change > 6: 
-                print("dawg what")
+                # ~ print("dawg what")
                 weaponsActive.remove(weapon)
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)

@@ -138,9 +138,22 @@ class Charter:
                                             self.move()
 
                                             self.hitAGuyX = False
-                                    if other.kind == "dagger":
-                                        self.speedX = other.mass
-        
+                                    
+    def charterWeaponCollide(self, other):
+        if self != other:
+            if self.kind != "Bro":
+                if self.hitAGuyX == False:
+                    if self.didBounceY == False:
+                        #print("ouch")
+                        if self.rect.right > other.rect.left:   
+                            if self.rect.left < other.rect.right:
+                                if self.rect.bottom > other.rect.top:
+                                    if self.rect.top < other.rect.bottom:
+                                        print("kind discovered")
+                                        self.speedy -= other.mass / 4
+                                        self.speedx = other.speedx * other.mass / 40
+                                        self.health -= other.damage
+                                        self.move()
                 
     def update(self, size, playerpos):
         self.playerpos = playerpos

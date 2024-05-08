@@ -27,44 +27,44 @@ class dagger:
         self.kind = "Dagger"
         
         self.speedScaler = 2
-        self.timeScaler = 2
+        self.timeScaler = 3
         
     def move(self):
-        self.movement = [round(self.movementX), round(self.movementY)]
-        print("movement trying to go, movement = ", self.movement)
+        self.movement = [round(self.speedx), round(self.speedy)]
+        # ~ print("movement trying to go, movement = ", self.movement)
         self.rect = self.rect.move(self.movement)
-        print("Rect: ", self.rect)
+        # ~ print("Rect: ", self.rect)
         
                 
     def animate(self):
         print("animate is called")
         if self.change == 1:
-            self.movementX = 5 * self.speedScaler * (cos(self.facing))
-            self.movementY = 5 * self.speedScaler * (sin(self.facing))
+            self.speedx = 5 * self.speedScaler * (cos(self.facing))
+            self.speedy = 5 * self.speedScaler * (sin(self.facing))
         if self.change == 2:
-            self.movementX = 4 * self.speedScaler * (cos(self.facing))
-            self.movementY = 4 * self.speedScaler * (sin(self.facing))
+            self.speedx = 4 * self.speedScaler * (cos(self.facing))
+            self.speedy = 4 * self.speedScaler * (sin(self.facing))
         if self.change == 3:
-            self.movementX = 3 * self.speedScaler * (cos(self.facing))
-            self.movementY = 3 * self.speedScaler * (sin(self.facing))
+            self.speedx = 3 * self.speedScaler * (cos(self.facing))
+            self.speedy = 3 * self.speedScaler * (sin(self.facing))
         if self.change == 4:
-            self.movementX = -3 * self.speedScaler * (cos(self.facing))
-            self.movementY = -3 * self.speedScaler * (sin(self.facing))
+            self.speedx = -3 * self.speedScaler * (cos(self.facing))
+            self.speedy = -3 * self.speedScaler * (sin(self.facing))
         if self.change == 5:
-            self.movementX = -4 * self.speedScaler * (cos(self.facing))
-            self.movementY = -4 * self.speedScaler * (sin(self.facing))
+            self.speedx = -4 * self.speedScaler * (cos(self.facing))
+            self.speedy = -4 * self.speedScaler * (sin(self.facing))
         if self.change == 6:
-            self.movementX = -5 * self.speedScaler * (cos(self.facing))
-            self.movementX = -5 * self.speedScaler * (sin(self.facing))
+            self.speedx = -5 * self.speedScaler * (cos(self.facing))
+            self.speedy = -5 * self.speedScaler * (sin(self.facing))
         self.change += 1/self.timeScaler
-        print(self.change)
-        print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
-        print("Movement: " + str([self.movementX, self.movementX]))
+        # ~ print(self.change)
+        # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
+        # ~ print("Movement: " + str([self.movementX, self.movementX]))
         return self.change
             
     def update(self, player):
         adjacent = 1
-        print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
+        # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
         diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
         adjacent = diff[0]
         if adjacent == 0:
@@ -73,10 +73,10 @@ class dagger:
         self.facing = atan(diff[1] / adjacent)
         if (diff[0] < 0):
             self.facing += math.pi
-        print("Facing: ", self.facing, "Adjacent: ", adjacent)
+        # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
         self.animate()
-        self.movementX += player.speedx
-        self.movementY += player.speedy
+        self.speedx += player.speedx
+        self.speedy += player.speedy
         self.move()
 
                 
