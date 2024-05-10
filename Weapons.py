@@ -25,6 +25,8 @@ class dagger:
         self.damage = 9999
         adjacent = 100
         self.kind = "Dagger"
+        self.speedy = 0
+        self.speedx = 0
         
         self.speedScaler = 2
         self.timeScaler = 3
@@ -75,8 +77,8 @@ class dagger:
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
         self.animate()
-        self.speedx += player.speedx
-        self.speedy += player.speedy
+        self.speedx += player.speedx / 2
+        self.speedy += player.speedy / 2
         self.move()
 
                 
