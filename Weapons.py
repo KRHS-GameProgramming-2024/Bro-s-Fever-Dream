@@ -27,6 +27,9 @@ class dagger:
         self.kind = "Dagger"
         self.speedy = 0
         self.speedx = 0
+        self.playerSpeedX = 0
+        self.playerSpeedY = 0
+        self.live = 0
         
         self.speedScaler = 2
         self.timeScaler = 3
@@ -66,6 +69,7 @@ class dagger:
             
     def update(self, player):
         adjacent = 1
+        self.live += 1
         # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
         diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
         adjacent = diff[0]
@@ -77,8 +81,16 @@ class dagger:
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
         self.animate()
-        self.speedx += player.speedx / 2
-        self.speedy += player.speedy / 2
+        if self.live == 1:
+            self.speedx += player.speedx
+            self.speedy += player.speedy
+        if player.speedy != self.playerSpeedY:
+            self.playerSpeedY = player.speedy
+            self.speedy += (self.playerSpeedY / 6) + 1
+        if player.speedx != self.playerSpeedX:
+            self.playerSpeedX = player.speedx
+            self.speedx += self.playerSpeedX * 2
+        
         self.move()
 
                 

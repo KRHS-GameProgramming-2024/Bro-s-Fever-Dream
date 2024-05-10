@@ -150,7 +150,7 @@ class Charter:
                                 if self.rect.bottom > other.rect.top:
                                     if self.rect.top < other.rect.bottom:
                                         print("kind discovered")
-                                        self.speedy -= other.mass / 4
+                                        self.speedy -= other.mass / 3
                                         self.speedx = other.speedx * other.mass / 40
                                         self.health -= other.damage
                                         self.move()

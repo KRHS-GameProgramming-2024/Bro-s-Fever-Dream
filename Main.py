@@ -36,7 +36,7 @@ from JukeBox import *
 
 
 
-
+# ~ , flags = pygame.FULLSCREEN goes right after the size in screen
 
 
 pygame.init()
@@ -118,6 +118,7 @@ while True:
             if pygame.mouse.get_pressed()[2]:
                 print("mouse click works")
                 weaponsActive += [SoupLadle(player.rect.center)]
+                using = True
                 print("see soupp ladle if nothing else happened.")
 
     #print(event.button)
