@@ -1,13 +1,43 @@
 import math, pygame, sys, random
-from LevelLoader import *
-from Bro import*
-from Walls import*
-from Enemy import *
-from GoopyGlob import *
+#enemies
 from Gravestone import *
-from JukeBox import *
-from Hud import *
+from Enemy import *
+    #air
+    
+    #earth
+from GoopyGlob import *    
+    #fire
+    
+    #water
+    
+#friendlies
+    #player
+from Bro import*
+    #NPCs
+
+#weapons
+from Weapons import *
+    #daggers
+from SoupLadle import *
+    #swords
+    
+    #ranged
+
+#action files
+    #interfaces
 from HealthBar import *
+from Hud import *
+    #world load and generation
+from Walls import*
+from LevelLoader import *
+from JukeBox import *
+
+
+
+
+
+
+
 
 pygame.init()
 
@@ -39,14 +69,19 @@ walls = tiles
 Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
-PlayerLiving = True
 
 music(1)
 
 player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
-
-
+weaponsActive = []
+def use(self, direction):
+    if using == True:
+        weaponsActive += self.equipped
+        player.equipped.animate()
+        using = False
+        print("see soupp ladle if nothing else happened.")
+        
 while True:
     prev = (world, levX, levY)
     for event in pygame.event.get():
@@ -78,6 +113,14 @@ while True:
                 player.goKey("sdown")
             elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                 player.goKey("srun")
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[2]:
+                print("mouse click works")
+                weaponsActive += [SoupLadle(player.rect.center)]
+                print("see soupp ladle if nothing else happened.")
+
+    #print(event.button)
+    
                 
     if player.rect[0] > 1024:
             levY = int(levY+1)
@@ -151,7 +194,7 @@ while True:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
         Death.update(pygame.image.load("Bro/Images/YouDied.png"))
-        PlayerLiving = False
+        player.living = False
         if GraveCount == 0:
             Stones += [Gravestone(player.rect.center)]
             GraveCount = 1
@@ -165,13 +208,15 @@ while True:
             Collision.wallTileCollide(wall)
         for Charter in Bros:
             Collision.charterChaterCollide(Charter)
+            for weapon in weaponsActive:
+                Collision.charterWeaponCollide(weapon)
     for wall in walls:
         for Grave in Stones:
             Grave.wallTileCollide(wall)
     screen.blit(backgrounds[0], [0,0])
     for Bro in Bros:
         if Bro.kind == "Bro":
-            if PlayerLiving == True:
+            if player.living == True:
                 screen.blit(Bro.image, Bro.rect)
         if Bro.kind == "GoopyGlob":
             screen.blit(Bro.image, Bro.rect)
@@ -179,11 +224,21 @@ while True:
         screen.blit(wall.image, wall.rect)
     for Grave in Stones:
         screen.blit(Grave.image, Grave.rect)
+        player.rect = Grave.rect
+
+    for weapon in weaponsActive:
+        screen.blit(weapon.image, weapon.rect)
+        weapon.update(player)
+        if weapon.kind == "Dagger": 
+            # ~ print("ok so we got the kind now")
+            if weapon.change > 6: 
+                # ~ print("dawg what")
+                weaponsActive.remove(weapon)
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
     pygame.display.flip()
     Clock.tick(60);
    
     #print(Clock.get_fps())
-
+#
 
