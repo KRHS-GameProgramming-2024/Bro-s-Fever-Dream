@@ -7,13 +7,14 @@ class dagger:
                    startPos = [0, 1], 
                    angle = int(pi/3), 
                    name = "Soup Ladle",  
-                   images = ["Earth/SoupLadle/Images/SoupLadleLeft.png"] 
-                             ):
-        self.images = []
-        for image in images:
-            self.images += [pygame.image.load(image)]
+                   images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), 
+                            pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")
+                            ]):
+        self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
         self.facing = angle
-        self.image = self.images[0]  
+        self.frame = 1
+        print(self.images)
+        self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
         self.useSpeed = useSpeed
@@ -43,9 +44,11 @@ class dagger:
                 
     def animate(self):
         print("animate is called")
+        
         if self.change == 1:
             self.speedx = 5 * self.speedScaler * (cos(self.facing))
             self.speedy = 5 * self.speedScaler * (sin(self.facing))
+            self.image = pygame.transform.rotate(self.image, 315 - (180 * self.facing / math.pi))
         if self.change == 2:
             self.speedx = 4 * self.speedScaler * (cos(self.facing))
             self.speedy = 4 * self.speedScaler * (sin(self.facing))
@@ -66,8 +69,21 @@ class dagger:
         # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
         # ~ print("Movement: " + str([self.movementX, self.movementX]))
         return self.change
+        
+    def rot_center(self):
+        """rotate an image while keeping its center and size"""
+        orig_rect = self.image.get_rect()
+        rot_image = pygame.transform.rotate(self.image, 180*self.facing/math.pi)
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        rot_image = rot_image.subsurface(rot_rect).copy()
+        self.image = rot_image
             
     def update(self, player):
+        if (3 * math.pi / 2) > self.facing > (math.pi / 2):
+            self.frame = 0
+        else:
+            self.frame = 1
         adjacent = 1
         self.live += 1
         # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
