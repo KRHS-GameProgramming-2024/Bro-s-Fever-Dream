@@ -69,7 +69,6 @@ walls = tiles
 Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
-PlayerLiving = True
 
 music(1)
 
@@ -190,13 +189,13 @@ while True:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
     Health.update(player.health)
-    # ~ Death.update("")
+
     Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
     if player.health > 0:
         Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
     else:
         Death.update(pygame.image.load("Bro/Images/YouDied.png"))
-        PlayerLiving = False
+        player.living = False
         if GraveCount == 0:
             Stones += [Gravestone(player.rect.center)]
             GraveCount = 1
@@ -218,7 +217,7 @@ while True:
     screen.blit(backgrounds[0], [0,0])
     for Bro in Bros:
         if Bro.kind == "Bro":
-            if PlayerLiving == True:
+            if player.living == True:
                 screen.blit(Bro.image, Bro.rect)
         if Bro.kind == "GoopyGlob":
             screen.blit(Bro.image, Bro.rect)
@@ -226,6 +225,7 @@ while True:
         screen.blit(wall.image, wall.rect)
     for Grave in Stones:
         screen.blit(Grave.image, Grave.rect)
+        player.rect = Grave.rect
 
     for weapon in weaponsActive:
         screen.blit(weapon.image, weapon.rect)
@@ -242,4 +242,3 @@ while True:
    
     #print(Clock.get_fps())
 #
-
