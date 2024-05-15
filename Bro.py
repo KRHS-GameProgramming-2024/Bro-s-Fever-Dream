@@ -1,5 +1,13 @@
 import math, pygame, sys, random
 from Enemy import *
+#weapons
+from Weapons import *
+    #daggers
+from SoupLadle import *
+    #swords
+    
+    #ranged
+
     
 class Bro(Charter):
     def __init__(self, maxSpeed=4, speed = [8,8], startPos=[0,1]):
@@ -24,6 +32,8 @@ class Bro(Charter):
         self.damage = 0
         self.hitCounter = 0
         self.run = "none"
+        self.living = True
+        self.equipped = SoupLadle(self.rect.center)
             
         self.didBounceX = False
         self.didBounceY = False
@@ -76,6 +86,9 @@ class Bro(Charter):
                 self.speedx = self.maxSpeedx
             elif self.run == "none":
                 pass
+    
+
+        
     
     def look(self, look):
         if look == "right":
