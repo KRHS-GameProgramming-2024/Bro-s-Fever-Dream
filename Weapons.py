@@ -25,6 +25,8 @@ class dagger:
         self.damage = 9999
         adjacent = 100
         self.kind = "Dagger"
+        self.speedy = 0
+        self.speedx = 0
         
         self.speedScaler = 2
         self.timeScaler = 3

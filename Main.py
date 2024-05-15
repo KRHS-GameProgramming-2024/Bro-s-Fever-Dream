@@ -62,10 +62,10 @@ levX = 0
 levY = 0
 LevelChange = False
 
-tiles = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
-walls = tiles
+level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+walls = level[0]
+GoopyGlobs = level[1]
 counter = 0
-walls = tiles
 Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
@@ -117,7 +117,7 @@ while True:
             if pygame.mouse.get_pressed()[2]:
                 print("mouse click works")
                 weaponsActive += [SoupLadle(player.rect.center)]
-                print("see soupp ladle if nothing else happened.")
+                print("see soup ladle if nothing else happened.")
 
     #print(event.button)
     
@@ -161,7 +161,9 @@ while True:
 
     if LevelChange == True:
         try:
-            walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+            level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+            walls = level[0]
+            GoopyGlobs = level[1]
             LevelChange = False
         except:
             world, levX, levY = prev
@@ -177,13 +179,15 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        Bros += [GoopyGlob()]
+        #Bros += [GoopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
             Charter.update(size)
         else:
             Charter.update(size, Bros[0].rect.x)
+    for Charter in GoopyGlobs:
+        Charter.update(size, Bros[0].rect.x)
     for Grave in Stones:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
@@ -206,7 +210,16 @@ while True:
             Collision.wallTileCollide(wall)    
         for wall in walls:
             Collision.wallTileCollide(wall)
+        for GoopyGlob in GoopyGlobs:
+            Collision.charterChaterCollide(GoopyGlob)
         for Charter in Bros:
+            Collision.charterChaterCollide(Charter)
+            for weapon in weaponsActive:
+                Collision.charterWeaponCollide(weapon)
+    for Collision in GoopyGlobs:
+        for wall in walls:
+            Collision.wallTileCollide(wall)
+        for Charter in GoopyGlobs:
             Collision.charterChaterCollide(Charter)
             for weapon in weaponsActive:
                 Collision.charterWeaponCollide(weapon)
@@ -218,10 +231,12 @@ while True:
         if Bro.kind == "Bro":
             if player.living == True:
                 screen.blit(Bro.image, Bro.rect)
-        if Bro.kind == "GoopyGlob":
-            screen.blit(Bro.image, Bro.rect)
+        # ~ if Bro.kind == "GoopyGlob":
+            # ~ screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
+    for GoopyGlob in GoopyGlobs:
+        screen.blit(GoopyGlob.image, GoopyGlob.rect)
     for Grave in Stones:
         screen.blit(Grave.image, Grave.rect)
         player.rect = Grave.rect
