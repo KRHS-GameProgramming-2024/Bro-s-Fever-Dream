@@ -235,6 +235,9 @@ while True:
             if weapon.change > 6: 
                 # ~ print("dawg what")
                 weaponsActive.remove(weapon)
+        if weapon.kind == "Popper":
+            if weapon.firing == True:
+                pass
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
     pygame.display.flip()

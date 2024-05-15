@@ -174,11 +174,17 @@ class shooter:
         if self.live == 1:
             self.image = pygame.transform.rotate(self.image, 270 - (180 * self.facing / math.pi))
             self.previousRotation = 270 - (180 * self.facing / math.pi)
-            self.pin = True
+            self.pin += 1
+            if self.pin == self.timeScaler:
+                self.firing = True
+                self.pin = 0
         else: 
             self.image = pygame.transform.rotate(self.image, 270 - (180 * self.facing / math.pi) - self.previousRotation)
             self.previousRotation = 270 - (180 * self.facing / math.pi) - self.previousRotation
-            self.pin = True
+            self.pin += 1
+            if self.pin == self.timeScaler:
+                self.firing = True
+                self.pin = 0
         
     def update(self, player):
         if (3 * math.pi / 2) > self.facing > (math.pi / 2):
@@ -205,4 +211,6 @@ class shooter:
             self.speedx += self.playerSpeedX 
         self.animate
         self.move()
-    
+
+class projectile:
+    pass
