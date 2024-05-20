@@ -36,9 +36,6 @@ from JukeBox import *
 
 
 
-# ~ , flags = pygame.FULLSCREEN goes right after the size in screen
-
-
 pygame.init()
 
 size = [1024,768]
