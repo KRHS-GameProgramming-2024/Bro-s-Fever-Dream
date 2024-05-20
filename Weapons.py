@@ -22,7 +22,7 @@ def getScaledMouse():
    
     mousex,mousey=pygame.mouse.get_pos()
    
-    return [xScale*mousex + offset[0], yScale*mousey + offset[1]]
+    return [xScale*mousex, yScale*mousey]
 
 class dagger:
     def __init__(self, useSpeed = 1, 
