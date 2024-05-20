@@ -124,22 +124,22 @@ class Charter:
                         if self.rect.left < other.rect.right:
                             if self.rect.bottom > other.rect.top:
                                 if self.rect.top < other.rect.bottom:
-                                    if self.kind == "Bro" or other.kind == "Bro":
-                                        if other.kind == "Bro":
-                                            if other.hitCounter > 30:
-                                                other.health -= self.damage
-                                                other.hitCounter = 0
-                                        if self.kind == "Bro":
-                                            if self.hitCounter > 30:
-                                                self.health -= other.damage
-                                                self.hitCounter = 0
-                                        if self.rect.center != other.rect.center:
-                                            self.elasticCollision(other, 'x')
-                                            if other.standing == False:
-                                                self.elasticCollision(other, 'y')
-                                            self.move()
+                                        if self.kind == "Bro" or other.kind == "Bro":
+                                            if other.kind == "Bro":
+                                                if other.hitCounter > 30:
+                                                    other.health -= self.damage
+                                                    other.hitCounter = 0
+                                            if self.kind == "Bro":
+                                                if self.hitCounter > 30:
+                                                    self.health -= other.damage
+                                                    self.hitCounter = 0
+                                            if self.rect.center != other.rect.center:
+                                                self.elasticCollision(other, 'x')
+                                                if other.standing == False:
+                                                    self.elasticCollision(other, 'y')
+                                                self.move()
 
-                                            self.hitAGuyX = False
+                                                self.hitAGuyX = False
                                     
     def charterWeaponCollide(self, other):
         if self != other:

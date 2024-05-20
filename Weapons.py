@@ -2,6 +2,28 @@ import pygame, sys, random
 from math import *
 from Bro import *
 
+def getScaledMouse():
+    size = [1024,768]
+    x, y=pygame.display.get_surface().get_size()
+    xScale=size[0]/x
+    yScale=size[1]/y
+   
+    x2=x/size[0]
+    y2=y/size[1]
+   
+    if x2==y2:
+        offset=[0,0]
+    elif x2>y2:
+        offset=[(x-y)/2,0]
+    elif x2<y2:
+        offset=[0,(y-x)/2]
+    else:
+        print('something went wrong, check function "getScaledMouse"')
+   
+    mousex,mousey=pygame.mouse.get_pos()
+   
+    return [xScale*mousex, yScale*mousey]
+
 class dagger:
     def __init__(self, useSpeed = 1, 
                    startPos = [0, 1], 
@@ -78,8 +100,8 @@ class dagger:
             self.frame = 1
         adjacent = 1
         self.live += 1
-        # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
-        diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
+        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
+        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
@@ -193,8 +215,8 @@ class shooter:
             self.frame = 1
         adjacent = 1
         self.live += 1
-        # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
-        diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
+        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
+        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
