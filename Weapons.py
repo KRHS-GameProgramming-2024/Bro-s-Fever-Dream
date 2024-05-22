@@ -2,6 +2,28 @@ import pygame, sys, random
 from math import *
 from Bro import *
 
+def getScaledMouse():
+    size = [1024,768]
+    x, y=pygame.display.get_surface().get_size()
+    xScale=size[0]/x
+    yScale=size[1]/y
+   
+    x2=x/size[0]
+    y2=y/size[1]
+   
+    if x2==y2:
+        offset=[0,0]
+    elif x2>y2:
+        offset=[(x-y)/2,0]
+    elif x2<y2:
+        offset=[0,(y-x)/2]
+    else:
+        print('something went wrong, check function "getScaledMouse"')
+   
+    mousex,mousey=pygame.mouse.get_pos()
+   
+    return [xScale*mousex, yScale*mousey]
+
 class dagger:
     def __init__(self, useSpeed = 1, 
                    startPos = [0, 1], 
@@ -46,24 +68,24 @@ class dagger:
         print("animate is called")
         
         if self.change == 1:
-            self.speedx = 5 * self.speedScaler * (cos(self.facing))
-            self.speedy = 5 * self.speedScaler * (sin(self.facing))
+            self.speedx = 5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
             self.image = pygame.transform.rotate(self.image, 315 - (180 * self.facing / math.pi))
         if self.change == 2:
-            self.speedx = 4 * self.speedScaler * (cos(self.facing))
-            self.speedy = 4 * self.speedScaler * (sin(self.facing))
+            self.speedx = 4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 3:
-            self.speedx = 3 * self.speedScaler * (cos(self.facing))
-            self.speedy = 3 * self.speedScaler * (sin(self.facing))
+            self.speedx = 3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 4:
-            self.speedx = -3 * self.speedScaler * (cos(self.facing))
-            self.speedy = -3 * self.speedScaler * (sin(self.facing))
+            self.speedx = -3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 5:
-            self.speedx = -4 * self.speedScaler * (cos(self.facing))
-            self.speedy = -4 * self.speedScaler * (sin(self.facing))
+            self.speedx = -4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 6:
-            self.speedx = -5 * self.speedScaler * (cos(self.facing))
-            self.speedy = -5 * self.speedScaler * (sin(self.facing))
+            self.speedx = -5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         self.change += 1/self.timeScaler
         # ~ print(self.change)
         # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
@@ -78,8 +100,8 @@ class dagger:
             self.frame = 1
         adjacent = 1
         self.live += 1
-        # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
-        diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
+        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
+        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
@@ -88,17 +110,23 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
-        self.animate()
-        if self.live == 1:
-            self.speedx += player.speedx
-            self.speedy += player.speedy
-        if player.speedy != self.playerSpeedY:
-            self.playerSpeedY = player.speedy
-            self.speedy += (self.playerSpeedY / 6) + 1
-        if player.speedx != self.playerSpeedX:
-            self.playerSpeedX = player.speedx
-            self.speedx += self.playerSpeedX * 2
         
+        # ~ if self.live == 1:
+            # ~ self.speedx += player.speedx
+            # ~ self.speedy += player.speedy
+        # ~ print("-------> was: ", self.speedx, self.speedy)
+        # ~ if player.speedy != self.playerSpeedY:
+            # ~ self.speedy -= self.playerSpeedY
+            # ~ self.playerSpeedY = player.speedy
+            # ~ self.speedy += self.playerSpeedY
+        # ~ if player.speedx != self.playerSpeedX:
+            # ~ self.speedx -= self.playerSpeedX
+            # ~ self.playerSpeedX = player.speedx
+            # ~ self.speedx += self.playerSpeedX
+        # ~ print("-------> now: ", self.speedx, self.speedy)
+        self.playerSpeedX = player.speedx
+        self.playerSpeedY = player.speedy
+        self.animate()
         self.move()
 
                 
@@ -193,8 +221,8 @@ class shooter:
             self.frame = 1
         adjacent = 1
         self.live += 1
-        # ~ print("Mouse Pos: " + str(pygame.mouse.get_pos()) + ", Player Pos: " + str(player.rect.center))
-        diff = [(pygame.mouse.get_pos()[0] - player.rect.center[0]), (pygame.mouse.get_pos()[1] - player.rect.center[1])]
+        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
+        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
@@ -203,13 +231,14 @@ class shooter:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
+        
         if player.speedy != self.playerSpeedY:
             self.playerSpeedY = player.speedy
             self.speedy += self.playerSpeedY
         if player.speedx != self.playerSpeedX:
             self.playerSpeedX = player.speedx
             self.speedx += self.playerSpeedX 
-        self.animate
+        
         self.move()
 
 class projectile:

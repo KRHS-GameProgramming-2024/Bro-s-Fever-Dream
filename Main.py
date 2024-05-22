@@ -36,13 +36,11 @@ from JukeBox import *
 
 
 
-# ~ , flags = pygame.FULLSCREEN goes right after the size in screen
-
-
 pygame.init()
 
 size = [1024,768]
-screen = pygame.display.set_mode(size)
+screen = pygame.Surface(size)
+window = pygame.display.set_mode(size, flags = pygame.RESIZABLE)
 
 backgrounds = [pygame.image.load("Backgrounds/Cavebackground1.jpg"),
 pygame.image.load("Backgrounds/Cavebackground2.jpg"),
@@ -102,6 +100,8 @@ while True:
                 player.goKey("down")
             elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                 player.goKey("run")
+            elif event.key == pygame.K_ESCAPE:
+                sys.exit();
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.goKey("sleft")
@@ -184,7 +184,10 @@ while True:
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
-            Charter.update(size)
+            if player.living == True:
+                Charter.update(size)
+            else:
+                pass
         else:
             Charter.update(size, Bros[0].rect.x)
     for Charter in GoopyGlobs:
@@ -243,20 +246,38 @@ while True:
         player.rect = Grave.rect
 
     for weapon in weaponsActive:
-        screen.blit(weapon.image, weapon.rect)
-        weapon.update(player)
-        if weapon.kind == "Dagger": 
-            # ~ print("ok so we got the kind now")
-            if weapon.change > 6: 
-                # ~ print("dawg what")
-                weaponsActive.remove(weapon)
-        if weapon.kind == "Popper":
-            if weapon.firing == True:
-                pass
+        if player.living == True:
+            screen.blit(weapon.image, weapon.rect)
+            weapon.update(player)
+            if weapon.kind == "Dagger": 
+                # ~ print("ok so we got the kind now")
+                if weapon.change > 6: 
+                    # ~ print("dawg what")
+                    weaponsActive.remove(weapon)
+            if weapon.kind == "Popper":
+                if weapon.firing == True:
+                    pass
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
+    
+    
+    width, height = pygame.display.get_surface().get_size()
+    width = width/size[0]
+    height = height/size[1]
+    if width == height:
+        window.blit(pygame.transform.scale(screen, [width*size[0], height*size[1]]), [0,0])
+    elif width > height:
+        window.blit(pygame.transform.scale(screen, [height*size[0], height*size[1]]), [(width-height)*(size[0]/2),0])
+    elif width < height:
+        window.blit(pygame.transform.scale(screen, [width*size[0], width*size[1]]), [0,(height-width)*(size[1]/2)])
+        
+        
+    
+    
     pygame.display.flip()
     Clock.tick(60);
    
-    #print(Clock.get_fps())
+
+
+#print(Clock.get_fps())
 #
