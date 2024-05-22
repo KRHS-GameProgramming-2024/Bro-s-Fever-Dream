@@ -110,6 +110,21 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
+<<<<<<< Updated upstream
+=======
+        self.animate()
+        if self.live == 1:
+            self.speedx += player.speedx
+            self.speedy += player.speedy
+        if player.speedy != self.playerSpeedY:
+            self.speedy -= self.playerSpeedY
+            self.playerSpeedY = player.speedy
+            self.speedy += self.playerSpeedY
+        if player.speedx != self.playerSpeedX:
+            self.speedx -= self.playerSpeedX
+            self.playerSpeedX = player.speedx
+            self.speedx += self.playerSpeedX
+>>>>>>> Stashed changes
         
         # ~ if self.live == 1:
             # ~ self.speedx += player.speedx
@@ -231,14 +246,13 @@ class shooter:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
-        
         if player.speedy != self.playerSpeedY:
             self.playerSpeedY = player.speedy
             self.speedy += self.playerSpeedY
         if player.speedx != self.playerSpeedX:
             self.playerSpeedX = player.speedx
             self.speedx += self.playerSpeedX 
-        
+        self.animate
         self.move()
 
 class projectile:
