@@ -1,8 +1,10 @@
 from Enemy import *
 
 class GoopyGlob(Charter):
-    def __init__(self):
-        Charter.__init__(self, name = "Goopy Glob", image = "Earth\GoopyGlob\Images\GoopyGlob.png")
+    def __init__(self, startPos = [500, 500]):
+        Charter.__init__(self, startPos = [500, 500], name = "Goopy Glob", image = "Earth\GoopyGlob\Images\GoopyGlob.png")
+        self.rect = self.image.get_rect()
+        self.rect = self.rect.move(startPos)
         self.gravity = 2
         self.mass = 28
         self.didBounceY = False
