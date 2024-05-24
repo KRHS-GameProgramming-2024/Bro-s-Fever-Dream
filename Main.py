@@ -190,8 +190,8 @@ while True:
                 pass
         else:
             Charter.update(size, Bros[0].rect.x)
-    # ~ for Charter in GoopyGlobs:
-        # ~ Charter.update(size, Bros[0].rect.x)
+    for Charter in GoopyGlobs:
+        Charter.update(size, Bros[0].rect.x)
     for Grave in Stones:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
@@ -277,5 +277,7 @@ while True:
     pygame.display.flip()
     Clock.tick(60);
    
-    #print(Clock.get_fps())
+
+
+#print(Clock.get_fps())
 #

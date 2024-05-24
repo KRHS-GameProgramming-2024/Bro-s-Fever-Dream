@@ -1,5 +1,8 @@
 import pygame, sys, math
 from Walls import *
+from Enemy import *
+from GoopyGlob import *
+from Bro import *
 from Background import *
 
 def loadLevel(lev):
@@ -10,6 +13,7 @@ def loadLevel(lev):
     size = 32
     offset = size/2
     tiles = []
+    GoopyGlobs = []
 
     newLines = []
     for line in lines:
@@ -25,8 +29,11 @@ def loadLevel(lev):
         for x, c in enumerate(line):
             if c == "#":
                 tiles += [Wall([x*size+offset, y*size+offset])]
+            if c == "o":
+                GoopyGlobs += [GoopyGlob([x*size, y*size])]
 
-    return tiles
+    level = [tiles, GoopyGlobs]
+    return level
 
 if __name__ == "__main__":
     pygame.init()
