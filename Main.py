@@ -36,11 +36,13 @@ from JukeBox import *
 
 
 
+
+
+
 pygame.init()
 
 size = [1024,768]
-screen = pygame.Surface(size)
-window = pygame.display.set_mode(size, flags = pygame.RESIZABLE)
+screen = pygame.display.set_mode(size)
 
 backgrounds = [pygame.image.load("Backgrounds/Cavebackground1.jpg"),
 pygame.image.load("Backgrounds/Cavebackground2.jpg"),
@@ -60,10 +62,10 @@ levX = 0
 levY = 0
 LevelChange = False
 
-level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
-walls = level[0]
-GoopyGlobs = level[1]
+tiles = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+walls = tiles
 counter = 0
+walls = tiles
 Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
@@ -100,8 +102,6 @@ while True:
                 player.goKey("down")
             elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                 player.goKey("run")
-            elif event.key == pygame.K_ESCAPE:
-                sys.exit();
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.goKey("sleft")
@@ -117,7 +117,6 @@ while True:
             if pygame.mouse.get_pressed()[2]:
                 print("mouse click works")
                 weaponsActive += [SoupLadle(player.rect.center)]
-                using = True
                 print("see soupp ladle if nothing else happened.")
 
     #print(event.button)
@@ -162,9 +161,7 @@ while True:
 
     if LevelChange == True:
         try:
-            level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
-            walls = level[0]
-            GoopyGlobs = level[1]
+            walls = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
             LevelChange = False
         except:
             world, levX, levY = prev
@@ -180,18 +177,13 @@ while True:
     counter += 1
     #print(counter)
     if counter % 300 == 0:
-        #Bros += [GoopyGlob()]
+        Bros += [GoopyGlob()]
         print("go")
     for Charter in Bros:
         if Charter.kind == "Bro":
-            if player.living == True:
-                Charter.update(size)
-            else:
-                pass
+            Charter.update(size)
         else:
             Charter.update(size, Bros[0].rect.x)
-    for Charter in GoopyGlobs:
-        Charter.update(size, Bros[0].rect.x)
     for Grave in Stones:
         Grave.update()
     #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
@@ -214,16 +206,7 @@ while True:
             Collision.wallTileCollide(wall)    
         for wall in walls:
             Collision.wallTileCollide(wall)
-        for GoopyGlob in GoopyGlobs:
-            Collision.charterChaterCollide(GoopyGlob)
         for Charter in Bros:
-            Collision.charterChaterCollide(Charter)
-            for weapon in weaponsActive:
-                Collision.charterWeaponCollide(weapon)
-    for Collision in GoopyGlobs:
-        for wall in walls:
-            Collision.wallTileCollide(wall)
-        for Charter in GoopyGlobs:
             Collision.charterChaterCollide(Charter)
             for weapon in weaponsActive:
                 Collision.charterWeaponCollide(weapon)
@@ -235,49 +218,26 @@ while True:
         if Bro.kind == "Bro":
             if player.living == True:
                 screen.blit(Bro.image, Bro.rect)
-        # ~ if Bro.kind == "GoopyGlob":
-            # ~ screen.blit(Bro.image, Bro.rect)
+        if Bro.kind == "GoopyGlob":
+            screen.blit(Bro.image, Bro.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
-    for GoopyGlob in GoopyGlobs:
-        screen.blit(GoopyGlob.image, GoopyGlob.rect)
     for Grave in Stones:
         screen.blit(Grave.image, Grave.rect)
         player.rect = Grave.rect
 
     for weapon in weaponsActive:
-        if player.living == True:
-            screen.blit(weapon.image, weapon.rect)
-            weapon.update(player)
-            if weapon.kind == "Dagger": 
-                # ~ print("ok so we got the kind now")
-                if weapon.change > 6: 
-                    # ~ print("dawg what")
-                    weaponsActive.remove(weapon)
-            if weapon.kind == "Popper":
-                if weapon.firing == True:
-                    pass
+        screen.blit(weapon.image, weapon.rect)
+        weapon.update(player)
+        if weapon.kind == "Dagger": 
+            # ~ print("ok so we got the kind now")
+            if weapon.change > 6: 
+                # ~ print("dawg what")
+                weaponsActive.remove(weapon)
     screen.blit(Death.image, Death.rect)
     screen.blit(Healthbar.image, Healthbar.rect)
-    
-    
-    width, height = pygame.display.get_surface().get_size()
-    width = width/size[0]
-    height = height/size[1]
-    if width == height:
-        window.blit(pygame.transform.scale(screen, [width*size[0], height*size[1]]), [0,0])
-    elif width > height:
-        window.blit(pygame.transform.scale(screen, [height*size[0], height*size[1]]), [(width-height)*(size[0]/2),0])
-    elif width < height:
-        window.blit(pygame.transform.scale(screen, [width*size[0], width*size[1]]), [0,(height-width)*(size[1]/2)])
-        
-        
-    
-    
     pygame.display.flip()
     Clock.tick(60);
    
-
-
-#print(Clock.get_fps())
+    #print(Clock.get_fps())
 #
