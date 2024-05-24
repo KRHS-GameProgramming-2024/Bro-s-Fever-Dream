@@ -110,7 +110,6 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
-
         self.animate()
         if self.live == 1:
             self.speedx += player.speedx
@@ -123,7 +122,6 @@ class dagger:
             self.speedx -= self.playerSpeedX
             self.playerSpeedX = player.speedx
             self.speedx += self.playerSpeedX
-
         
         # ~ if self.live == 1:
             # ~ self.speedx += player.speedx
