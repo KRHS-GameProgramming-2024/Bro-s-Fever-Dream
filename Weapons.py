@@ -68,24 +68,24 @@ class dagger:
         print("animate is called")
         
         if self.change == 1:
-            self.speedx = 5 * self.speedScaler * (cos(self.facing))
-            self.speedy = 5 * self.speedScaler * (sin(self.facing))
+            self.speedx = 5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
             self.image = pygame.transform.rotate(self.image, 315 - (180 * self.facing / math.pi))
         if self.change == 2:
-            self.speedx = 4 * self.speedScaler * (cos(self.facing))
-            self.speedy = 4 * self.speedScaler * (sin(self.facing))
+            self.speedx = 4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 3:
-            self.speedx = 3 * self.speedScaler * (cos(self.facing))
-            self.speedy = 3 * self.speedScaler * (sin(self.facing))
+            self.speedx = 3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = 3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 4:
-            self.speedx = -3 * self.speedScaler * (cos(self.facing))
-            self.speedy = -3 * self.speedScaler * (sin(self.facing))
+            self.speedx = -3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 5:
-            self.speedx = -4 * self.speedScaler * (cos(self.facing))
-            self.speedy = -4 * self.speedScaler * (sin(self.facing))
+            self.speedx = -4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         if self.change == 6:
-            self.speedx = -5 * self.speedScaler * (cos(self.facing))
-            self.speedy = -5 * self.speedScaler * (sin(self.facing))
+            self.speedx = -5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
+            self.speedy = -5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
         self.change += 1/self.timeScaler
         # ~ print(self.change)
         # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
@@ -110,17 +110,38 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
+<<<<<<< Updated upstream
+=======
         self.animate()
         if self.live == 1:
             self.speedx += player.speedx
             self.speedy += player.speedy
         if player.speedy != self.playerSpeedY:
+            self.speedy -= self.playerSpeedY
             self.playerSpeedY = player.speedy
-            self.speedy += (self.playerSpeedY / 6) + 1
+            self.speedy += self.playerSpeedY
         if player.speedx != self.playerSpeedX:
+            self.speedx -= self.playerSpeedX
             self.playerSpeedX = player.speedx
-            self.speedx += self.playerSpeedX * 2
+            self.speedx += self.playerSpeedX
+>>>>>>> Stashed changes
         
+        # ~ if self.live == 1:
+            # ~ self.speedx += player.speedx
+            # ~ self.speedy += player.speedy
+        # ~ print("-------> was: ", self.speedx, self.speedy)
+        # ~ if player.speedy != self.playerSpeedY:
+            # ~ self.speedy -= self.playerSpeedY
+            # ~ self.playerSpeedY = player.speedy
+            # ~ self.speedy += self.playerSpeedY
+        # ~ if player.speedx != self.playerSpeedX:
+            # ~ self.speedx -= self.playerSpeedX
+            # ~ self.playerSpeedX = player.speedx
+            # ~ self.speedx += self.playerSpeedX
+        # ~ print("-------> now: ", self.speedx, self.speedy)
+        self.playerSpeedX = player.speedx
+        self.playerSpeedY = player.speedy
+        self.animate()
         self.move()
 
                 
