@@ -14,15 +14,15 @@ def getScaledMouse():
     if x2==y2:
         offset=[0,0]
     elif x2>y2:
-        offset=[(x-y)/2,0]
+        offset=[(x2-y2)/(size[0]/2), 0]
     elif x2<y2:
-        offset=[0,(y-x)/2]
+        offset=[0, (y2-x2)/(size[1]/2)]
     else:
         print('something went wrong, check function "getScaledMouse"')
    
     mousex,mousey=pygame.mouse.get_pos()
    
-    return [xScale*mousex, yScale*mousey]
+    return [xScale*mousex - offset[0], yScale*mousey - offset[1]]
 
 class dagger:
     def __init__(self, useSpeed = 1, 
@@ -110,6 +110,8 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
+
+
         self.animate()
         if self.live == 1:
             self.speedx += player.speedx
@@ -121,6 +123,7 @@ class dagger:
             self.speedx -= self.playerSpeedX
             self.playerSpeedX = player.speedx
             self.speedx += self.playerSpeedX
+
         
         # ~ if self.live == 1:
             # ~ self.speedx += player.speedx
