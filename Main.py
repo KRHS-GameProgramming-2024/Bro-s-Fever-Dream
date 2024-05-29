@@ -116,7 +116,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[2]:
                 print("mouse click works")
-                weaponsActive += [SoupLadle([player.rect.center[0] - 13, player.rect.center[1]])]
+                weaponsActive += [SoupLadle([player.rect.center[0] - 12, player.rect.center[1] - 3])]
                 using = True
                 print("see soupp ladle if nothing else happened.")
 
