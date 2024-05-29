@@ -116,11 +116,10 @@ class dagger:
         if self.live == 1:
             self.speedx += player.speedx
             self.speedy += player.speedy
-        if player.speedy != self.playerSpeedY:
+        else:
             self.speedy -= self.playerSpeedY
             self.playerSpeedY = player.speedy
             self.speedy += self.playerSpeedY
-        if player.speedx != self.playerSpeedX:
             self.speedx -= self.playerSpeedX
             self.playerSpeedX = player.speedx
             self.speedx += self.playerSpeedX
