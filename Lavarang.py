@@ -10,5 +10,5 @@ class Lavarang(boomerang):
         self.mass = 100
         self.didBounceY = False
         self.damage = 80
-        self.speedScaler = 5
+        self.speedScaler = 7
         self.timeScaler = 7

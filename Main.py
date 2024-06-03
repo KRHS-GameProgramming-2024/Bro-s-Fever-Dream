@@ -286,7 +286,7 @@ while True:
                         pass
                 if weapon.kind == "Boomerang": 
                     # ~ print("ok so we got the kind now")
-                    if weapon.change > 6: 
+                    if (weapon.live)/(weapon.timeScaler) > 6: 
                         # ~ print("dawg what")
                         weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)

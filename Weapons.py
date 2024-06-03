@@ -301,29 +301,54 @@ class boomerang:
     def animate(self):
         print("animate is called")
         
-        if self.change == 1:
-            self.speedx = 5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 + 1 * (cos(self.facing))
-            self.speedy = 5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY + 1 * (sin(self.facing))
-        if self.change == 2:
-            self.speedx = 4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 + 2 * (cos(self.facing))
-            self.speedy = 4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY + 2 * (sin(self.facing))
-        if self.change == 3:
-            self.speedx = 3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 + 3 * (cos(self.facing))
-            self.speedy = 3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY + 3 * (sin(self.facing))
-        if self.change == 4:
-            self.speedx = -3 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 - 1 * (cos(self.facing))
-            self.speedy = -3 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY - 1 * (sin(self.facing))
-        if self.change == 5:
-            self.speedx = -4 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 - 2 * (cos(self.facing))
-            self.speedy = -4 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY - 2 * (sin(self.facing))
-        if self.change == 6:
-            self.speedx = -5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2 - 3 * (cos(self.facing))
-            self.speedy = -5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY - 3 * (sin(self.facing))
-        self.change += 1/self.timeScaler
+        if self.live/self.timeScaler == 1:
+            self.speedx = 3 * self.speedScaler * (cos(self.facing)) + (10 * (cos(self.facing)))
+            self.speedy = 3 * self.speedScaler * (sin(self.facing)) + (10 * (sin(self.facing)))
+        if self.live/self.timeScaler == 2:
+            self.speedx = 2 * self.speedScaler * (cos(self.facing)) + (20 * (cos(self.facing)))
+            self.speedy = 2 * self.speedScaler * (sin(self.facing)) + (20 * (sin(self.facing)))
+        if self.live/self.timeScaler == 3:
+            self.speedx = 1 * self.speedScaler * (cos(self.facing)) + (30 * (cos(self.facing)))
+            self.speedy = 1 * self.speedScaler * (sin(self.facing)) + (30 * (sin(self.facing)))
+        if self.live/self.timeScaler == 4:
+            self.speedx = -1 * self.speedScaler * (cos(self.facing)) - (10 * (cos(self.facing)))
+            self.speedy = -1 * self.speedScaler * (sin(self.facing)) - (10 * (sin(self.facing)))
+        if self.live/self.timeScaler == 5:
+            self.speedx = -2 * self.speedScaler * (cos(self.facing)) - (20 * (cos(self.facing)))
+            self.speedy = -2 * self.speedScaler * (sin(self.facing)) - (20 * (sin(self.facing)))
+        if self.live/self.timeScaler == 6:
+            self.speedx = -3 * self.speedScaler * (cos(self.facing)) - (30 * (cos(self.facing)))
+            self.speedy = -3 * self.speedScaler * (sin(self.facing)) - (30 * (sin(self.facing)))
+        
         # ~ print(self.change)
         # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
         # ~ print("Movement: " + str([self.movementX, self.movementX]))
         return self.change
+        
+    def rotate(self):
+                # Base Image
+        self.baseImage = self.image
+        self.baseImage = pygame.transform.scale(self.image, self.rect.size)
+
+        # Mouse Position
+        mousePos = pygame.mouse.get_pos()
+        mousePosPlayerX = mousePos[0] - self.rect.center[0]
+        mousePosPlayerY = mousePos[1] - self.rect.center[1]
+           
+        # Angle Calculation - - just use self.facing
+        # ~ self.angle = ((math.atan2(mousePosPlayerY, mousePosPlayerX))/math.pi)*180
+        # ~ self.angle = -self.angle
+
+        # Rotation
+        rot_image = pygame.transform.rotate(self.baseImage, 15)
+        # Grab original rect
+        rot_rect = self.rect.copy()
+        # Grab center the rotated image on the center of the base image
+        rot_rect.center = rot_image.get_rect().center
+        # Clip the images back to size
+        rot_image = rot_image.subsurface(rot_rect)
+        # Put the rotated image into the actual image
+        self.image = rot_image
         
             # ~             self.image = pygame.transform.rotate(self.image, 315 - (180 * self.facing / math.pi))
     def update(self, player):
@@ -340,24 +365,31 @@ class boomerang:
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
-    
+        if self.change >= 3:    
+            self.speedy -= self.playerSpeedY
+            self.speedy += player.speedy
+            self.playerSpeedY = player.speedy
+            self.speedx -= self.playerSpeedX
+            self.speedx += player.speedx
+            self.playerSpeedX = player.speedx
+        
         self.facing = atan(diff[1] / adjacent)
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
 
-
+        self.rotate()
         self.animate()
-        if self.live >= self.timeScaler/2:
-            self.speedx += player.speedx * 2
-            self.speedy += player.speedy * 2
-        else:
-            self.speedy -= self.playerSpeedY
-            self.playerSpeedY = player.speedy * 2
-            self.speedy += self.playerSpeedY
-            self.speedx -= self.playerSpeedX
-            self.playerSpeedX = player.speedx * 2
-            self.speedx += self.playerSpeedX
+        if self.live == 1:
+            self.speedx += player.speedx 
+            self.speedy += player.speedy 
+        # ~ else:
+            # ~ self.speedy -= self.playerSpeedY
+            # ~ self.playerSpeedY = player.speedy 
+            # ~ self.speedy += self.playerSpeedY
+            # ~ self.speedx -= self.playerSpeedX
+            # ~ self.playerSpeedX = player.speedx 
+            # ~ self.speedx += self.playerSpeedX
 
         
         # ~ if self.live == 1:
