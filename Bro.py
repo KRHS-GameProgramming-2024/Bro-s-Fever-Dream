@@ -34,8 +34,11 @@ class Bro(Charter):
         self.hitCounter = 0
         self.run = "none"
         self.living = True
-        self.equipped = Lavarang
-            
+        self.scroll = 0
+        if self.scroll == 0:
+            self.equipped = Lavarang
+        elif self.scroll == 1:
+            self.quipped = SoupLadle    
         self.didBounceX = False
         self.didBounceY = False
         
@@ -88,7 +91,15 @@ class Bro(Charter):
             elif self.run == "none":
                 pass
     
-
+    def weaponSwap(self, scroll):
+        if scroll == 0:
+            self.scroll = 0
+            self.equipped = Lavarang
+        elif scroll == 1:
+            self.scroll = 1
+            self.equipped = SoupLadle
+        elif scroll == 2:
+            self.scroll = 2
         
     
     def look(self, look):
@@ -99,6 +110,12 @@ class Bro(Charter):
         self.image = self.images[self.frame]
 
     def update(self, size):
+        # ~ if self.scroll == 0:
+            # ~ self.equipped = Lavarang
+        # ~ elif self.scroll == 1:
+            # ~ self.quipped = SoupLadle    
+        print(self.scroll)
+        print(self.equipped)
         #print(self.speed)
         self.speedy += self.gravity
         self.move()

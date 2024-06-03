@@ -365,7 +365,7 @@ class boomerang:
         adjacent = diff[0]
         if adjacent == 0:
             adjacent = .01
-        if self.change >= 3:    
+        if self.live/self.timeScaler >= 3:    
             self.speedy -= self.playerSpeedY
             self.speedy += player.speedy
             self.playerSpeedY = player.speedy

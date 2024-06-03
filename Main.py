@@ -129,6 +129,12 @@ while True:
                     player.goKey("run")
                 elif event.key == pygame.K_ESCAPE:
                     sys.exit();
+                elif event.key == pygame.K_1:
+                    player.weaponSwap(0)
+                elif event.key == pygame.K_2:
+                    player.weaponSwap(1)
+                elif event.key == pygame.K_3:
+                    player.weaponSwap(2)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     player.goKey("sleft")
