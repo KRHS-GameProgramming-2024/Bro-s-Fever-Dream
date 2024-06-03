@@ -89,7 +89,9 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
-        
+            elif event.type == pygame.KEYUP:
+                StartScreen = False
+                MainGame = True
         screen.blit(Bg,[(1024-952)/2, (768-714)/2])
         
         width, height = pygame.display.get_surface().get_size()
@@ -141,7 +143,7 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[2]:
                     print("mouse click works")
-                    weaponsActive += [SoupLadle([player.rect.center[0] - 13, player.rect.center[1]])]
+                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1]])]
                     using = True
                     print("see soupp ladle if nothing else happened.")
 
@@ -282,6 +284,11 @@ while True:
                 if weapon.kind == "Popper":
                     if weapon.firing == True:
                         pass
+                if weapon.kind == "Boomerang": 
+                    # ~ print("ok so we got the kind now")
+                    if weapon.change > 6: 
+                        # ~ print("dawg what")
+                        weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)
         screen.blit(Healthbar.image, Healthbar.rect)
         
