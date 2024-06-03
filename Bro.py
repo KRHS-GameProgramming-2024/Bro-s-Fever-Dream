@@ -4,6 +4,7 @@ from Enemy import *
 from Weapons import *
     #daggers
 from SoupLadle import *
+from Lavarang import *
     #swords
     
     #ranged
@@ -33,7 +34,7 @@ class Bro(Charter):
         self.hitCounter = 0
         self.run = "none"
         self.living = True
-        self.equipped = SoupLadle(self.rect.center)
+        self.equipped = Lavarang
             
         self.didBounceX = False
         self.didBounceY = False
