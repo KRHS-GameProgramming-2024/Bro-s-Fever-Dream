@@ -52,11 +52,20 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 
 Clock = pygame.time.Clock();
 
+RESPAWN = pygame.USEREVENT
+
 Stones = []
 GraveCount = 0
 
 StartScreen = True
 MainGame = False
+BareWare = True
+Title = False
+TitleWait = False
+Delay1 = True
+StartMusic = True
+MainMusic = True
+Timer = True
 
 world = 1
 levX = 0
@@ -71,7 +80,6 @@ Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
 Health = Hud("Health: ", [500,500])
 Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
-music(1)
 
 player = Bro(5, [0,0], [1024/2, 768/2])
 Bros = [player]
@@ -85,14 +93,38 @@ def use(self, direction):
         
 while True:
     while StartScreen == True:
-        Bg = pygame.image.load("TitleScreen/TitleScreen.png")
+        if StartMusic == True:
+            music(8)
+            StartMusic = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
-            elif event.type == pygame.KEYUP:
-                StartScreen = False
-                MainGame = True
-        screen.blit(Bg,[(1024-952)/2, (768-714)/2])
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                     StartScreen = False
+                     MainGame = True
+                
+        
+        screen.fill((0,0,0))
+        if Delay1 == True:
+            pygame.time.delay(1600)
+        
+        if TitleWait == True:
+            Title = True
+        
+        if BareWare == False:
+            TitleWait = True
+        
+        if Title == True:
+            screen.blit(pygame.image.load("TitleScreen/TitleScreen.png"),[(1024-952)/2, (768-714)/2])
+            screen.blit(pygame.image.load("TitleScreen/TitleText.png"), [(1024-929)/2, (768-228)/3])
+            Delay1 = False
+        
+        if BareWare == True:
+            screen.blit(pygame.image.load("TitleScreen/BareWareBig.png"),[(1024-120)/2, (768-236)/2])
+            BareWare = False
+            Delay1 = True
+            pygame.time.delay(1000)
         
         width, height = pygame.display.get_surface().get_size()
         width = width/size[0]
@@ -108,10 +140,18 @@ while True:
         Clock.tick(60)
         
     while MainGame == True:
+        if MainMusic == True:
+            music(1)
+            MainMusic = False
         prev = (world, levX, levY)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
+            elif event.type == RESPAWN:
+                MainGame = False
+                StartScreen = True
+                StartMusic = True
+                Timer = True
             elif event.type == pygame.KEYDOWN:
                 print(event.key)
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -148,8 +188,13 @@ while True:
                     player.goKey("srun")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[2]:
+                    
+                    if player.rect.center[0]>getScaledMouse()[0]:
+                        player.look("left")
+                    if player.rect.center[0]<getScaledMouse()[0]:
+                        player.look("right")
                     print("mouse click works")
-                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1]])]
+                    weaponsActive += [SoupLadle([player.rect.center[0] - 13, player.rect.center[1]])]
                     using = True
                     print("see soupp ladle if nothing else happened.")
 
@@ -241,6 +286,9 @@ while True:
                 GraveCount = 1
             else:
                 pass
+        if player.living == False and Timer == True:
+            pygame.time.set_timer(RESPAWN, 5000)
+            Timer = False
         #print(player.jumping, player.speedy)
         for Collision in Bros:
             for wall in walls:

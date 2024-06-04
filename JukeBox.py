@@ -31,6 +31,10 @@ def music(number):
         pygame.mixer.music.load("Music/SeriousConversationIntro.mp3")
         pygame.mixer.music.queue("Music/SeriousConversationLoop.mp3", "mp3", -1)
         pygame.mixer.music.play()
+    elif number == 8:
+        pygame.mixer.music.load("Music/TitleTheme.mp3")
+        pygame.mixer.music.queue("Music/TitleThemeLoop.mp3", "mp3", -1)
+        pygame.mixer.music.play()
     elif number == 0:	
         pygame.mixer.music.load("Music/Test1.mp3")
         pygame.mixer.music.queue("Music/Test2.mp3", "mp3", -1)

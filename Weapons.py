@@ -11,18 +11,21 @@ def getScaledMouse():
     x2=x/size[0]
     y2=y/size[1]
    
+    mousex,mousey=pygame.mouse.get_pos()
+
+   
     if x2==y2:
         offset=[0,0]
+        r=[xScale*mousex, yScale*mousey]
     elif x2>y2:
-        offset=[(x2-y2)/(size[0]/2), 0]
+        offset=[(x2-y2)*(size[0]/2),0]
+        r=[yScale*(mousex-offset[0]), yScale*mousey]
     elif x2<y2:
-        offset=[0, (y2-x2)/(size[1]/2)]
+        offset=[0,(y2-x2)*(size[1]/2)]
+        r=[xScale*mousex, (mousey-offset[1])*xScale]
     else:
         print('something went wrong, check function "getScaledMouse"')
-   
-    mousex,mousey=pygame.mouse.get_pos()
-   
-    return [xScale*mousex - offset[0], yScale*mousey - offset[1]]
+    return r
 
 class dagger:
     def __init__(self, useSpeed = 1, 

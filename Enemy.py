@@ -128,10 +128,22 @@ class Charter:
                                             if other.kind == "Bro":
                                                 if other.hitCounter > 30:
                                                     other.health -= self.damage
+                                                    if other.health > 0:
+                                                        Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.play()
+                                                    else:
+                                                        Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
+                                                        Effect2.play()
                                                     other.hitCounter = 0
                                             if self.kind == "Bro":
                                                 if self.hitCounter > 30:
                                                     self.health -= other.damage
+                                                    if self.health > 0:
+                                                        Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.play()
+                                                    else:
+                                                        Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
+                                                        Effect2.play()
                                                     self.hitCounter = 0
                                             if self.rect.center != other.rect.center:
                                                 self.elasticCollision(other, 'x')
