@@ -194,7 +194,7 @@ while True:
                     if player.rect.center[0]<getScaledMouse()[0]:
                         player.look("right")
                     print("mouse click works")
-                    weaponsActive += [SoupLadle([player.rect.center[0] - 13, player.rect.center[1]])]
+                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1]])]
                     using = True
                     print("see soupp ladle if nothing else happened.")
 
