@@ -191,7 +191,7 @@ while True:
             GoopyGlobs = level[1]
             counter = 0
             Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
-            Health = Hud("Health: ", [500,500])
+            #Health = Hud("Health: ", [500,500])
             Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
 
@@ -334,11 +334,18 @@ while True:
                 Charter.update(size, Bros[0].rect.x)
         for Charter in GoopyGlobs:
             Charter.update(size, Bros[0].rect.x)
+            print(Charter.rect[0])
+            EnemyHealthbar1 = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [Charter.rect.center[0] - 30, Charter.rect.center[1] - 55])
+            if Charter.health > 0:
+                EnemyHealthbar1.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (Charter.health - 20)/0.3125, 8])) 
+            EnemyHealthbar2 = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [Charter.rect.center[0] - 30, Charter.rect.center[1] - 55])
+            if Charter.health > 0:
+                EnemyHealthbar2.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (Charter.health - 20)/0.3125, 8])) 
+            
         for Grave in Stones:
             Grave.update()
-        #Health = Hud("Health: ", [player.rect.center[0] - 90, player.rect.center[1] - 70])
-        Health.update(player.health)
-
+        #Health.update(player.health)
+        
         Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [player.rect.center[0] - 30, player.rect.center[1] - 55])
         if player.health > 0:
             Healthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (player.health - 100)/1.5625, 8]))     
@@ -410,6 +417,8 @@ while True:
                         weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)
         screen.blit(Healthbar.image, Healthbar.rect)
+        screen.blit(EnemyHealthbar1.image, EnemyHealthbar1.rect)
+        screen.blit(EnemyHealthbar2.image, EnemyHealthbar2.rect)
         
         
         width, height = pygame.display.get_surface().get_size()

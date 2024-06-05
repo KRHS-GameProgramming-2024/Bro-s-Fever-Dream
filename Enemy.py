@@ -71,14 +71,10 @@ class Charter:
                                 self.jumping = False
                             return True
                         if self.kind == "GoopyGlob":
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
-                                self.speedx = -self.speedx
-                                #print("wheeeee")
+                            self.speedx = -self.speedx
                             self.speedy = -self.speedy
                             self.move()
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
-                                self.speedx = 0
-                                #print("whooooo")
+                            self.speedx = 0
                             self.speedy = 0
                             #self.didBounceX = True
                             #self.didBounceY = True
@@ -138,6 +134,7 @@ class Charter:
                                         self.speedy -= other.mass / 3
                                         self.speedx = other.speedx * other.mass / 40
                                         self.health -= other.damage
+                                        #print(self.health)
                                         self.move()
                 
     def update(self, size, playerpos):
