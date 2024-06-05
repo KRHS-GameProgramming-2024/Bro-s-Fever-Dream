@@ -11,18 +11,21 @@ def getScaledMouse():
     x2=x/size[0]
     y2=y/size[1]
    
+    mousex,mousey=pygame.mouse.get_pos()
+
+   
     if x2==y2:
         offset=[0,0]
+        r=[xScale*mousex, yScale*mousey]
     elif x2>y2:
-        offset=[(x2-y2)/(size[0]/2), 0]
+        offset=[(x2-y2)*(size[0]/2),0]
+        r=[yScale*(mousex-offset[0]), yScale*mousey]
     elif x2<y2:
-        offset=[0, (y2-x2)/(size[1]/2)]
+        offset=[0,(y2-x2)*(size[1]/2)]
+        r=[xScale*mousex, (mousey-offset[1])*xScale]
     else:
         print('something went wrong, check function "getScaledMouse"')
-   
-    mousex,mousey=pygame.mouse.get_pos()
-   
-    return [xScale*mousex - offset[0], yScale*mousey - offset[1]]
+    return r
 
 class dagger:
     def __init__(self, useSpeed = 1, 
@@ -35,7 +38,7 @@ class dagger:
         self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
         self.facing = angle
         self.frame = 1
-        print(self.images)
+        #print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
@@ -65,7 +68,7 @@ class dagger:
         
                 
     def animate(self):
-        print("animate is called")
+        #print("animate is called")
         
         if self.change == 1:
             self.speedx = 5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
@@ -180,7 +183,7 @@ class shooter:
         self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
         self.facing = angle
         self.frame = 1
-        print(self.images)
+        #print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
@@ -256,3 +259,167 @@ class shooter:
 
 class projectile:
     pass
+class boomerang:
+    def __init__(self, useSpeed = 1, 
+                   startPos = [0, 1], 
+                   angle = int(pi/3), 
+                   name = "Soup Ladle",  
+                   images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), 
+                            pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")
+                            ]):
+        self.images = []
+        for image in images:
+            self.images += [pygame.image.load(image)]
+            
+        
+        
+        self.facing = angle
+        self.frame = 0
+        #print(self.images)
+        self.image = self.images[self.frame]  
+        self.rect = self.image.get_rect(center = startPos)
+        
+        self.baseImage = self.image
+        self.angle = 0;
+        
+        #self.rect = self.rect.animate(startPos)
+        self.useSpeed = useSpeed
+        self.movementX = 0
+        self.movementY = 0
+        self.movement = [self.movementX, self.movementY]
+        self.change = 1
+        self.mass = 1
+        self.damage = 9999
+        adjacent = 100
+        self.kind = "Boomerang"
+        self.speedy = 0
+        self.speedx = 0
+        self.playerSpeedX = 0
+        self.playerSpeedY = 0
+        self.live = 0
+        
+        self.speedScaler = 2
+        self.timeScaler = 3
+        
+    def move(self):
+        self.movement = [round(self.speedx), round(self.speedy)]
+        # ~ print("movement trying to go, movement = ", self.movement)
+        self.rect = self.rect.move(self.movement)
+        # ~ print("Rect: ", self.rect)
+        
+                
+    def animate(self):
+        #print("animate is called")
+        
+        if self.live/self.timeScaler == 1:
+            self.speedx = 3 * self.speedScaler * (cos(self.facing)) + (10 * (cos(self.facing)))
+            self.speedy = 3 * self.speedScaler * (sin(self.facing)) + (10 * (sin(self.facing)))
+        if self.live/self.timeScaler == 2:
+            self.speedx = 2 * self.speedScaler * (cos(self.facing)) + (20 * (cos(self.facing)))
+            self.speedy = 2 * self.speedScaler * (sin(self.facing)) + (20 * (sin(self.facing)))
+        if self.live/self.timeScaler == 3:
+            self.speedx = 1 * self.speedScaler * (cos(self.facing)) + (30 * (cos(self.facing)))
+            self.speedy = 1 * self.speedScaler * (sin(self.facing)) + (30 * (sin(self.facing)))
+        if self.live/self.timeScaler == 4:
+            self.speedx = -1 * self.speedScaler * (cos(self.facing)) - (10 * (cos(self.facing)))
+            self.speedy = -1 * self.speedScaler * (sin(self.facing)) - (10 * (sin(self.facing)))
+        if self.live/self.timeScaler == 5:
+            self.speedx = -2 * self.speedScaler * (cos(self.facing)) - (20 * (cos(self.facing)))
+            self.speedy = -2 * self.speedScaler * (sin(self.facing)) - (20 * (sin(self.facing)))
+        if self.live/self.timeScaler == 6:
+            self.speedx = -3 * self.speedScaler * (cos(self.facing)) - (30 * (cos(self.facing)))
+            self.speedy = -3 * self.speedScaler * (sin(self.facing)) - (30 * (sin(self.facing)))
+        
+        # ~ print(self.change)
+        # ~ print("sine of angle ", sin(self.facing), " cosine of angle ", cos(self.facing), " self.facing ", self.facing)
+        # ~ print("Movement: " + str([self.movementX, self.movementX]))
+        return self.change
+        
+    def rotate(self):
+                # Base Image
+        
+
+        # Mouse Position
+        mousePos = pygame.mouse.get_pos()
+        mousePosPlayerX = mousePos[0] - self.rect.center[0]
+        mousePosPlayerY = mousePos[1] - self.rect.center[1]
+           
+        # Angle Calculation - - just use self.facing
+        # ~ self.angle = ((math.atan2(mousePosPlayerY, mousePosPlayerX))/math.pi)*180
+        # ~ self.angle = -self.angle
+
+        # Rotation
+        self.angle += 15
+        rot_image = pygame.transform.rotate(self.baseImage, self.angle)
+        # Grab original rect
+        rot_rect = self.rect.copy()
+        # Grab center the rotated image on the center of the base image
+        rot_rect.center = rot_image.get_rect().center
+        # Clip the images back to size
+        rot_image = rot_image.subsurface(rot_rect)
+        # Put the rotated image into the actual image
+        self.image = rot_image
+        
+            # ~             self.image = pygame.transform.rotate(self.image, 315 - (180 * self.facing / math.pi))
+    def update(self, player):
+        if (3 * math.pi / 2) > self.facing > (math.pi / 2):
+            self.frame = 0
+        else:
+            self.frame = 1
+        
+        adjacent = 1
+        self.live += 1
+        #self.image = pygame.transform.rotate(self.image, 315 - (15 / math.pi))
+        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
+        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
+        adjacent = diff[0]
+        if adjacent == 0:
+            adjacent = .01
+        if self.live/self.timeScaler >= 3:    
+            self.speedy -= self.playerSpeedY
+            self.speedy += player.speedy
+            self.playerSpeedY = player.speedy
+            self.speedx -= self.playerSpeedX
+            self.speedx += player.speedx
+            self.playerSpeedX = player.speedx
+        
+        self.facing = atan(diff[1] / adjacent)
+        if (diff[0] < 0):
+            self.facing += math.pi
+        # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
+
+        self.rotate()
+        self.animate()
+        if self.live == 1:
+            self.speedx += player.speedx 
+            self.speedy += player.speedy 
+        # ~ else:
+            # ~ self.speedy -= self.playerSpeedY
+            # ~ self.playerSpeedY = player.speedy 
+            # ~ self.speedy += self.playerSpeedY
+            # ~ self.speedx -= self.playerSpeedX
+            # ~ self.playerSpeedX = player.speedx 
+            # ~ self.speedx += self.playerSpeedX
+
+        
+        # ~ if self.live == 1:
+            # ~ self.speedx += player.speedx
+            # ~ self.speedy += player.speedy
+        # ~ print("-------> was: ", self.speedx, self.speedy)
+        # ~ if player.speedy != self.playerSpeedY:
+            # ~ self.speedy -= self.playerSpeedY
+            # ~ self.playerSpeedY = player.speedy
+            # ~ self.speedy += self.playerSpeedY
+        # ~ if player.speedx != self.playerSpeedX:
+            # ~ self.speedx -= self.playerSpeedX
+            # ~ self.playerSpeedX = player.speedx
+            # ~ self.speedx += self.playerSpeedX
+        # ~ print("-------> now: ", self.speedx, self.speedy)
+        self.playerSpeedX = player.speedx
+        self.playerSpeedY = player.speedy
+        self.animate()
+        self.move()
+
+                
+            
+                

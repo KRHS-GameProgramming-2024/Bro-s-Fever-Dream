@@ -42,33 +42,6 @@ class Charter:
         elif look == "left":
             self.frame = 0
         self.image = self.images[self.frame]
-        
-    # ~ def wallCollide(self, size):
-        # ~ width = size[0]
-        # ~ height = size[1]
-        # ~ if self.rect.bottom > height:
-            # ~ self.rect.bottom = height
-            # ~ self.speedy = 0
-            # ~ self.jumping = False
-            # ~ #print("Hit Ground")
-        # ~ if not self.didBounceY:
-            
-            # ~ if self.rect.top < 0:
-                # ~ self.speedy = -self.speedy
-                # ~ self.move()
-                # ~ self.speedy = 0
-                # ~ self.didBounceY = True
-        # ~ if not self.didBounceX:
-            # ~ if self.rect.right > width:
-                # ~ self.speedx = -self.speedx
-                # ~ self.move()
-                # ~ self.speedx = 0
-                # ~ self.didBounceX = True
-            # ~ if self.rect.left < 0:
-                # ~ self.speedx = -self.speedx
-                # ~ self.move()
-                # ~ self.speedx = 0
-                # ~ self.didBounceX = True
     
     def wallTileCollide(self, other):
         if self.rect.right > other.rect.left:   
@@ -76,22 +49,20 @@ class Charter:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
                         if self.kind == "Bro":
-                            if self.rect.top > other.rect.top and self.rect.right > other.rect.left and self.rect.left < other.rect.right:
-                                print("waaaaaa")
                             if self.rect.bottom > other.rect.top + 30:
                                     self.speedx = -self.speedx
-                                    print("weeeee")
+                                    #print("weeeee")
                             self.speedy = -self.speedy
                             self.move()
                             if self.rect.bottom > other.rect.top + 1:
                                     self.speedx = 0
-                                    print("wooooo")
+                                    #print("wooooo")
                             if self.rect.right > other.rect.left:   
                                 if self.rect.left < other.rect.right:
                                     if self.rect.bottom > other.rect.top:
                                         if self.rect.top < other.rect.bottom:
                                             self.rect.bottom = other.rect.top
-                                            print("Get out of wall")
+                                            #print("Get out of wall")
                             self.speedy = 0
                             self.didBounceX = True
                             self.didBounceY = True
@@ -128,10 +99,22 @@ class Charter:
                                             if other.kind == "Bro":
                                                 if other.hitCounter > 30:
                                                     other.health -= self.damage
+                                                    if other.health > 0:
+                                                        Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.play()
+                                                    else:
+                                                        Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
+                                                        Effect2.play()
                                                     other.hitCounter = 0
                                             if self.kind == "Bro":
                                                 if self.hitCounter > 30:
                                                     self.health -= other.damage
+                                                    if self.health > 0:
+                                                        Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.play()
+                                                    else:
+                                                        Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
+                                                        Effect2.play()
                                                     self.hitCounter = 0
                                             if self.rect.center != other.rect.center:
                                                 self.elasticCollision(other, 'x')
@@ -151,7 +134,7 @@ class Charter:
                             if self.rect.left < other.rect.right:
                                 if self.rect.bottom > other.rect.top:
                                     if self.rect.top < other.rect.bottom:
-                                        print("kind discovered")
+                                        #print("kind discovered")
                                         self.speedy -= other.mass / 3
                                         self.speedx = other.speedx * other.mass / 40
                                         self.health -= other.damage

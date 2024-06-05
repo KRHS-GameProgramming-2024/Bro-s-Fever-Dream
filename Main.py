@@ -52,45 +52,82 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 
 Clock = pygame.time.Clock();
 
-Stones = []
-GraveCount = 0
+RESPAWN = pygame.USEREVENT
+
+# ~ Stones = []
+# ~ GraveCount = 0
 
 StartScreen = True
 MainGame = False
+BareWare = True
+Title = False
+TitleWait = False
+Delay1 = True
+StartMusic = True
+MainMusic = True
+Timer = True
+MainReload = False
 
-world = 1
-levX = 0
-levY = 0
-LevelChange = False
+# ~ world = 1
+# ~ levX = 0
+# ~ levY = 0
+# ~ LevelChange = False
 
-level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
-walls = level[0]
-GoopyGlobs = level[1]
-counter = 0
-Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
-Health = Hud("Health: ", [500,500])
-Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
+# ~ level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+# ~ walls = level[0]
+# ~ GoopyGlobs = level[1]
+# ~ counter = 0
+# ~ Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
+# ~ Health = Hud("Health: ", [500,500])
+# ~ Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
 
-music(1)
 
-player = Bro(5, [0,0], [1024/2, 768/2])
-Bros = [player]
-weaponsActive = []
+# ~ player = Bro(5, [0,0], [1024/2, 768/2])
+# ~ Bros = [player]
+# ~ weaponsActive = []
 def use(self, direction):
     if using == True:
         weaponsActive += self.equipped
         player.equipped.animate()
         using = False
-        print("see soupp ladle if nothing else happened.")
+        #print("see soupp ladle if nothing else happened.")
         
 while True:
     while StartScreen == True:
-        Bg = pygame.image.load("TitleScreen/TitleScreen.png")
+        screen.fill((0,0,0))
+        if StartMusic == True:
+            music(8)
+            StartMusic = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                     StartScreen = False
+                     MainGame = True
+                     MainReload = True
+                
         
-        screen.blit(Bg,[(1024-952)/2, (768-714)/2])
+        
+        if Delay1 == True:
+            pygame.time.delay(1600)
+        
+        if TitleWait == True:
+            Title = True
+        
+        if BareWare == False:
+            TitleWait = True
+        
+        if Title == True:
+            screen.blit(pygame.image.load("TitleScreen/TitleScreen.png"),[(1024-952)/2, (768-714)/2])
+            screen.blit(pygame.image.load("TitleScreen/TitleText.png"), [(1024-929)/2, (768-228)/3])
+            Delay1 = False
+        
+        if BareWare == True:
+            screen.blit(pygame.image.load("TitleScreen/BareWareBig.png"),[(1024-120)/2, (768-236)/2])
+            BareWare = False
+            Delay1 = True
+            pygame.time.delay(1000)
         
         width, height = pygame.display.get_surface().get_size()
         width = width/size[0]
@@ -106,12 +143,85 @@ while True:
         Clock.tick(60)
         
     while MainGame == True:
+        if MainReload == True:
+            import math, pygame, sys, random
+            #enemies
+            from Gravestone import *
+            from Enemy import *
+                #air
+                
+                #earth
+            from GoopyGlob import *    
+                #fire
+                
+                #water
+                
+            #friendlies
+                #player
+            from Bro import*
+                #NPCs
+
+            #weapons
+            from Weapons import *
+                #daggers
+            from SoupLadle import *
+                #swords
+                
+                #ranged
+
+            #action files
+                #interfaces
+            from HealthBar import *
+            from Hud import *
+                #world load and generation
+            from Walls import*
+            from LevelLoader import *
+            from JukeBox import *
+            
+            Stones = []
+            GraveCount = 0
+            
+            world = 1
+            levX = 0
+            levY = 0
+            LevelChange = False
+
+            level = loadLevel(str(world)+str(levX)+str(levY)+ ".lvl")
+            walls = level[0]
+            GoopyGlobs = level[1]
+            counter = 0
+            Death = ImageHud(pygame.image.load("Bro/Images/YouDied.png"), [1024/2, 768/2])
+            Health = Hud("Health: ", [500,500])
+            Healthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [500,500])
+
+
+            player = Bro(5, [0,0], [1024/2, 768/2])
+            Bros = [player]
+            weaponsActive = []
+            MainReload = False
+            Timer = True
+        
+        if MainMusic == True:
+            music(1)
+            MainMusic = False
         prev = (world, levX, levY)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
+            elif event.type == RESPAWN:
+                pygame.event.clear(RESPAWN)
+                screen.fill((0,0,0))
+                StartScreen = True
+                MainGame = False
+                BareWare = True
+                Title = False
+                TitleWait = False
+                Delay1 = True
+                StartMusic = True
+                MainMusic = True
+                print("!")
             elif event.type == pygame.KEYDOWN:
-                print(event.key)
+                #print(event.key)
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     player.goKey("left")
                     player.look("left")
@@ -120,13 +230,19 @@ while True:
                     player.look("right")
                 elif event.key == pygame.K_w or event.key == pygame.K_UP:
                     player.goKey("up")
-                    print(player.jumping, player.speedy)
+                    #print(player.jumping, player.speedy)
                 elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     player.goKey("down")
                 elif event.key == pygame.K_i or event.key == pygame.K_SPACE:
                     player.goKey("run")
                 elif event.key == pygame.K_ESCAPE:
                     sys.exit();
+                elif event.key == pygame.K_1:
+                    player.weaponSwap(0)
+                elif event.key == pygame.K_2:
+                    player.weaponSwap(1)
+                elif event.key == pygame.K_3:
+                    player.weaponSwap(2)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                     player.goKey("sleft")
@@ -140,10 +256,15 @@ while True:
                     player.goKey("srun")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[2]:
-                    print("mouse click works")
-                    weaponsActive += [SoupLadle([player.rect.center[0] - 13, player.rect.center[1]])]
+                    
+                    if player.rect.center[0]>getScaledMouse()[0]:
+                        player.look("left")
+                    if player.rect.center[0]<getScaledMouse()[0]:
+                        player.look("right")
+                    #print("mouse click works")
+                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1]])]
                     using = True
-                    print("see soupp ladle if nothing else happened.")
+                    #print("see soupp ladle if nothing else happened.")
 
         #print(event.button)
         
@@ -202,11 +323,7 @@ while True:
         # ~ elif world == 3:
             # ~ bg = Background("Cavebackground3.jpg")
 
-        counter += 1
-        #print(counter)
-        if counter % 300 == 0:
-            #Bros += [GoopyGlob()]
-            print("go")
+
         for Charter in Bros:
             if Charter.kind == "Bro":
                 if player.living == True:
@@ -233,6 +350,10 @@ while True:
                 GraveCount = 1
             else:
                 pass
+        if player.living == False and Timer == True:
+            pygame.time.set_timer(RESPAWN, 5000, 1)
+            Timer = False
+            print("?")
         #print(player.jumping, player.speedy)
         for Collision in Bros:
             for wall in walls:
@@ -282,6 +403,11 @@ while True:
                 if weapon.kind == "Popper":
                     if weapon.firing == True:
                         pass
+                if weapon.kind == "Boomerang": 
+                    # ~ print("ok so we got the kind now")
+                    if (weapon.live)/(weapon.timeScaler) > 6: 
+                        # ~ print("dawg what")
+                        weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)
         screen.blit(Healthbar.image, Healthbar.rect)
         

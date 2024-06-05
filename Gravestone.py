@@ -26,7 +26,7 @@ class Gravestone():
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
                         if self.hit == True:
-                            effect = pygame.mixer.Sound("Music/NoahsHandHitTableGoBoomMakeGraveSoundThatIsLoud.mp3")
+                            effect = pygame.mixer.Sound("SoundEffects/NoahsHandHitTableGoBoomMakeGraveSoundThatIsLoud.mp3")
                             effect.play()
                             self.hit = False
                         self.speedx = -self.speedx
