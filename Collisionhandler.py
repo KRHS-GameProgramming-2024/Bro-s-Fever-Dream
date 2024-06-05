@@ -39,7 +39,7 @@ def elasticCollision(mass1=1, mass2=2, initialVelocity1=3, initialVelocity2=4):
 def inelasticCollision(mass1=1, mass2=2, initialVelocity1=3, initialVelocity2=4):
     finalVelocity1=(mass1*initialVelocity1+mass2*initialVelocity2)/(mass1+mass2)
     finalVelocity2=finalVelocity1
-    print(finalVelocity1)
+    #print(finalVelocity1)
     return finalVelocity2
 
 # ~ print(inelasticCollision(mass1, mass2, initialVelocity1, initialVelocity2))

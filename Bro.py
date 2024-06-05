@@ -56,7 +56,7 @@ class Bro(Charter):
             self.speedx = self.maxSpeedx
             self.run = "right"
         elif direction == "up" and not self.jumping:
-            print("jumping")
+            #print("jumping")
             self.jumping = True
             self.speedy = -self.jumpHeight
         elif direction == "down":
@@ -114,8 +114,8 @@ class Bro(Charter):
             # ~ self.equipped = Lavarang
         # ~ elif self.scroll == 1:
             # ~ self.quipped = SoupLadle    
-        print(self.scroll)
-        print(self.equipped)
+        #print(self.scroll)
+        #print(self.equipped)
         #print(self.speed)
         self.speedy += self.gravity
         self.move()
