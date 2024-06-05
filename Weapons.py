@@ -270,11 +270,18 @@ class boomerang:
         self.images = []
         for image in images:
             self.images += [pygame.image.load(image)]
+            
+        
+        
         self.facing = angle
         self.frame = 0
         print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
+        
+        self.baseImage = self.image
+        self.angle = 0;
+        
         #self.rect = self.rect.animate(startPos)
         self.useSpeed = useSpeed
         self.movementX = 0
@@ -330,8 +337,7 @@ class boomerang:
         
     def rotate(self):
                 # Base Image
-        self.baseImage = self.image
-        self.baseImage = pygame.transform.scale(self.image, self.rect.size)
+        
 
         # Mouse Position
         mousePos = pygame.mouse.get_pos()
@@ -343,7 +349,8 @@ class boomerang:
         # ~ self.angle = -self.angle
 
         # Rotation
-        rot_image = pygame.transform.rotate(self.baseImage, 15)
+        self.angle += 15
+        rot_image = pygame.transform.rotate(self.baseImage, self.angle)
         # Grab original rect
         rot_rect = self.rect.copy()
         # Grab center the rotated image on the center of the base image
