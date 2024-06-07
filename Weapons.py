@@ -67,9 +67,8 @@ class dagger:
         # ~ print("Rect: ", self.rect)
         
                 
-    def animate(self):
-        print("animate is called")
-        
+
+    def animate(self):    
         if self.change == 1:
             self.speedx = 5 * self.speedScaler * (cos(self.facing)) + self.playerSpeedX * 2
             self.speedy = 5 * self.speedScaler * (sin(self.facing)) + self.playerSpeedY
@@ -113,7 +112,7 @@ class dagger:
         if (diff[0] < 0):
             self.facing += math.pi
         # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
-
+        
 
         self.animate()
         if self.live == 1:
@@ -196,9 +195,11 @@ class shield:
         self.kind = "Shield"
         self.speedy = 0
         self.speedx = 0
-
+        self.theWay = False
         self.live = 0
-        
+        self.playerSpeedX = 0
+        self.playerSpeedY = 0
+        self.playerMovement = [self.playerSpeedX,self.playerSpeedY]
         self.speedScaler = 2
         self.timeScaler = 3
         
@@ -209,32 +210,30 @@ class shield:
         # ~ print("Rect: ", self.rect)
         
                 
-
+    def animate(self):
+        print("animate is called")
+        if self.theWay: self.speedx += 4 * self.speedScaler
+        if not self.theWay: self.speedx -= 4 * self.speedScaler
         
             
     def update(self, player):
-        if (3 * math.pi / 2) > self.facing > (math.pi / 2):
+        if getScaledMouse()[0] > player.rect.center[0]:
             self.frame = 0
         else:
             self.frame = 1
-        adjacent = 1
         self.live += 1
-        # ~ print("Mouse Pos: " + str(getScaledMouse()) + ", Player Pos: " + str(player.rect.center))
-        diff = [(getScaledMouse()[0] - player.rect.center[0]), (getScaledMouse()[1] - player.rect.center[1])]
-        adjacent = diff[0]
-        if adjacent == 0:
-            adjacent = .01
-    
-        self.facing = atan(diff[1] / adjacent)
-        if (diff[0] < 0):
-            self.facing += math.pi
-        # ~ print("Facing: ", self.facing, "Adjacent: ", adjacent)
-
-
-    
+        if getScaledMouse()[0] > player.rect.center[0]:
+            self.theWay = True
+        else: self.theWay = False
+        self.speedy -= self.playerSpeedY
+        self.speedy += player.speedy
+        self.playerSpeedY = player.speedy
+        self.speedx -= self.playerSpeedX
+        self.speedx += player.speedx
+        self.playerSpeedX = player.speedx
+        self.animate()
+        self.move()
         
-        self.speedx = player.speedx
-        self.speedy = player.speedy
 
 
         

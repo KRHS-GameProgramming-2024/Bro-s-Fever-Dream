@@ -194,7 +194,7 @@ while True:
                     if player.rect.center[0]<getScaledMouse()[0]:
                         player.look("right")
                     print("mouse click works")
-                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1]])]
+                    weaponsActive += [player.equipped([player.rect.center[0] - 13, player.rect.center[1] - 2])]
                     using = True
                     print("see soupp ladle if nothing else happened.")
 
@@ -332,7 +332,7 @@ while True:
                 weapon.update(player)
                 if weapon.kind == "Dagger": 
                     # ~ print("ok so we got the kind now")
-                    if weapon.change > 6: 
+                    if weapon.change > 7: 
                         # ~ print("dawg what")
                         weaponsActive.remove(weapon)
                 if weapon.kind == "Popper":
@@ -342,6 +342,9 @@ while True:
                     # ~ print("ok so we got the kind now")
                     if (weapon.live)/(weapon.timeScaler) > 6: 
                         # ~ print("dawg what")
+                        weaponsActive.remove(weapon)
+                if weapon.kind == "Shield":
+                    if weapon.live/weapon.timeScaler > 10: 
                         weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)
         screen.blit(Healthbar.image, Healthbar.rect)

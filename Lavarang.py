@@ -7,7 +7,7 @@ class Lavarang(boomerang):
         # ~ self.rect = self.image.get_rect(center = self.rect.center)
         
         self.gravity = 0.01
-        self.mass = 100
+        self.mass = 5
         self.didBounceY = False
         self.damage = 80
         self.speedScaler = 7

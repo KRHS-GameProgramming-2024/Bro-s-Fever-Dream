@@ -5,6 +5,7 @@ from Weapons import *
     #daggers
 from SoupLadle import *
 from Lavarang import *
+from HeroShield import *
     #swords
     
     #ranged
@@ -35,10 +36,9 @@ class Bro(Charter):
         self.run = "none"
         self.living = True
         self.scroll = 0
-        if self.scroll == 0:
-            self.equipped = Lavarang
-        elif self.scroll == 1:
-            self.quipped = SoupLadle    
+        if self.scroll == 0: self.equipped = Lavarang
+        elif self.scroll == 1: self.quipped = SoupLadle  
+        elif self.scroll == 2: self.equipped = HeroShield
         self.didBounceX = False
         self.didBounceY = False
         
@@ -100,6 +100,7 @@ class Bro(Charter):
             self.equipped = SoupLadle
         elif scroll == 2:
             self.scroll = 2
+            self.equipped = HeroShield
         
     
     def look(self, look):
@@ -114,6 +115,9 @@ class Bro(Charter):
             # ~ self.equipped = Lavarang
         # ~ elif self.scroll == 1:
             # ~ self.quipped = SoupLadle    
+        if self.scroll == 0: self.equipped = Lavarang
+        elif self.scroll == 1: self.quipped = SoupLadle  
+        elif self.scroll == 2: self.equipped = HeroShield
         print(self.scroll)
         print(self.equipped)
         #print(self.speed)
