@@ -1,4 +1,5 @@
 from Enemy import *
+from HealthBar import *
 
 class GoopyGlob(Charter):
     def __init__(self, startPos = [500, 500]):

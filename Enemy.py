@@ -1,4 +1,5 @@
 import math, pygame, sys, random
+from HealthBar import *
 #from Collisionhandler import *
 
 
@@ -97,6 +98,7 @@ class Charter:
                                                     other.health -= self.damage
                                                     if other.health > 0:
                                                         Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.set_volume(0.1)
                                                         Effect1.play()
                                                     else:
                                                         Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
@@ -107,6 +109,7 @@ class Charter:
                                                     self.health -= other.damage
                                                     if self.health > 0:
                                                         Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.set_volume(0.1)
                                                         Effect1.play()
                                                     else:
                                                         Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
@@ -148,6 +151,12 @@ class Charter:
         self.standing = False
         self.hitCounter += 1
         self.hitAGuyX = False
+        if self.kind == "GoopyGlob":
+            self.EnemyHealthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [self.rect.center[0] - 30, self.rect.center[1] - 55])
+            if self.health > 0:
+                self.EnemyHealthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (self.health - 20)/0.3125, 8]))
+            if self.health <= 0:
+                pass
         
     def elasticCollision(self, other, direction):
         # ~ ke10=(mass1*myInitialVelocity**2)/2

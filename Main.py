@@ -200,6 +200,8 @@ while True:
             weaponsActive = []
             MainReload = False
             Timer = True
+            
+            GoopyGlob.living = True
         
         if MainMusic == True:
             music(1)
@@ -219,7 +221,6 @@ while True:
                 Delay1 = True
                 StartMusic = True
                 MainMusic = True
-                print("!")
             elif event.type == pygame.KEYDOWN:
                 #print(event.key)
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -334,14 +335,8 @@ while True:
                 Charter.update(size, Bros[0].rect.x)
         for Charter in GoopyGlobs:
             Charter.update(size, Bros[0].rect.x)
-            print(Charter.rect[0])
-            EnemyHealthbar1 = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [Charter.rect.center[0] - 30, Charter.rect.center[1] - 55])
-            if Charter.health > 0:
-                EnemyHealthbar1.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (Charter.health - 20)/0.3125, 8])) 
-            EnemyHealthbar2 = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [Charter.rect.center[0] - 30, Charter.rect.center[1] - 55])
-            if Charter.health > 0:
-                EnemyHealthbar2.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (Charter.health - 20)/0.3125, 8])) 
-            
+            if Charter.health <= 0:
+                GoopyGlobs.remove(Charter)
         for Grave in Stones:
             Grave.update()
         #Health.update(player.health)
@@ -360,7 +355,6 @@ while True:
         if player.living == False and Timer == True:
             pygame.time.set_timer(RESPAWN, 5000, 1)
             Timer = False
-            print("?")
         #print(player.jumping, player.speedy)
         for Collision in Bros:
             for wall in walls:
@@ -388,12 +382,11 @@ while True:
             if Bro.kind == "Bro":
                 if player.living == True:
                     screen.blit(Bro.image, Bro.rect)
-            # ~ if Bro.kind == "GoopyGlob":
-                # ~ screen.blit(Bro.image, Bro.rect)
         for wall in walls:
             screen.blit(wall.image, wall.rect)
         for GoopyGlob in GoopyGlobs:
             screen.blit(GoopyGlob.image, GoopyGlob.rect)
+            screen.blit(GoopyGlob.EnemyHealthbar.image, GoopyGlob.EnemyHealthbar.rect)
         for Grave in Stones:
             screen.blit(Grave.image, Grave.rect)
             player.rect = Grave.rect
@@ -417,8 +410,6 @@ while True:
                         weaponsActive.remove(weapon)
         screen.blit(Death.image, Death.rect)
         screen.blit(Healthbar.image, Healthbar.rect)
-        screen.blit(EnemyHealthbar1.image, EnemyHealthbar1.rect)
-        screen.blit(EnemyHealthbar2.image, EnemyHealthbar2.rect)
         
         
         width, height = pygame.display.get_surface().get_size()
