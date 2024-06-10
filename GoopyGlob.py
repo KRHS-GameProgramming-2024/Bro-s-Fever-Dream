@@ -1,4 +1,5 @@
 from Enemy import *
+from HealthBar import *
 
 class GoopyGlob(Charter):
     def __init__(self, startPos = [500, 500]):
@@ -9,7 +10,7 @@ class GoopyGlob(Charter):
         self.mass = 28
         self.didBounceY = False
         self.damage = 20
-        self.health = 50
+        self.health = 20
         
         self.kind = "GoopyGlob"
     

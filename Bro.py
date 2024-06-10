@@ -56,7 +56,7 @@ class Bro(Charter):
             self.speedx = self.maxSpeedx
             self.run = "right"
         elif direction == "up" and not self.jumping:
-            print("jumping")
+            #print("jumping")
             self.jumping = True
             self.speedy = -self.jumpHeight
         elif direction == "down":

@@ -38,7 +38,7 @@ class dagger:
         self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
         self.facing = angle
         self.frame = 1
-        print(self.images)
+        #print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
@@ -265,7 +265,7 @@ class shooter:
         self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
         self.facing = angle
         self.frame = 1
-        print(self.images)
+        #print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
@@ -354,9 +354,13 @@ class boomerang:
             self.images += [pygame.image.load(image)]
         self.facing = angle
         self.frame = 0
-        print(self.images)
+        #print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
+        
+        self.baseImage = self.image
+        self.angle = 0;
+        
         #self.rect = self.rect.animate(startPos)
         self.useSpeed = useSpeed
         self.movementX = 0
@@ -384,7 +388,7 @@ class boomerang:
         
                 
     def animate(self):
-        print("animate is called")
+        #print("animate is called")
         
         if self.live/self.timeScaler == 1:
             self.speedx = 3 * self.speedScaler * (cos(self.facing)) + (10 * (cos(self.facing)))

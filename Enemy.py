@@ -1,4 +1,5 @@
 import math, pygame, sys, random
+from HealthBar import *
 #from Collisionhandler import *
 
 
@@ -42,33 +43,6 @@ class Charter:
         elif look == "left":
             self.frame = 0
         self.image = self.images[self.frame]
-        
-    # ~ def wallCollide(self, size):
-        # ~ width = size[0]
-        # ~ height = size[1]
-        # ~ if self.rect.bottom > height:
-            # ~ self.rect.bottom = height
-            # ~ self.speedy = 0
-            # ~ self.jumping = False
-            # ~ #print("Hit Ground")
-        # ~ if not self.didBounceY:
-            
-            # ~ if self.rect.top < 0:
-                # ~ self.speedy = -self.speedy
-                # ~ self.move()
-                # ~ self.speedy = 0
-                # ~ self.didBounceY = True
-        # ~ if not self.didBounceX:
-            # ~ if self.rect.right > width:
-                # ~ self.speedx = -self.speedx
-                # ~ self.move()
-                # ~ self.speedx = 0
-                # ~ self.didBounceX = True
-            # ~ if self.rect.left < 0:
-                # ~ self.speedx = -self.speedx
-                # ~ self.move()
-                # ~ self.speedx = 0
-                # ~ self.didBounceX = True
     
     def wallTileCollide(self, other):
         if self.rect.right > other.rect.left:   
@@ -76,22 +50,20 @@ class Charter:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
                         if self.kind == "Bro":
-                            if self.rect.top > other.rect.top and self.rect.right > other.rect.left and self.rect.left < other.rect.right:
-                                print("waaaaaa")
                             if self.rect.bottom > other.rect.top + 30:
                                     self.speedx = -self.speedx
-                                    print("weeeee")
+                                    #print("weeeee")
                             self.speedy = -self.speedy
                             self.move()
                             if self.rect.bottom > other.rect.top + 1:
                                     self.speedx = 0
-                                    print("wooooo")
+                                    #print("wooooo")
                             if self.rect.right > other.rect.left:   
                                 if self.rect.left < other.rect.right:
                                     if self.rect.bottom > other.rect.top:
                                         if self.rect.top < other.rect.bottom:
                                             self.rect.bottom = other.rect.top
-                                            print("Get out of wall")
+                                            #print("Get out of wall")
                             self.speedy = 0
                             self.didBounceX = True
                             self.didBounceY = True
@@ -100,14 +72,10 @@ class Charter:
                                 self.jumping = False
                             return True
                         if self.kind == "GoopyGlob":
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
-                                self.speedx = -self.speedx
-                                #print("wheeeee")
+                            self.speedx = -self.speedx
                             self.speedy = -self.speedy
                             self.move()
-                            if self.rect.top > other.rect.top or self.rect.bottom > other.rect.top:
-                                self.speedx = 0
-                                #print("whooooo")
+                            self.speedx = 0
                             self.speedy = 0
                             #self.didBounceX = True
                             #self.didBounceY = True
@@ -130,6 +98,7 @@ class Charter:
                                                     other.health -= self.damage
                                                     if other.health > 0:
                                                         Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.set_volume(0.1)
                                                         Effect1.play()
                                                     else:
                                                         Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
@@ -140,6 +109,7 @@ class Charter:
                                                     self.health -= other.damage
                                                     if self.health > 0:
                                                         Effect1 = pygame.mixer.Sound("SoundEffects/JacobScream.mp3")
+                                                        Effect1.set_volume(0.1)
                                                         Effect1.play()
                                                     else:
                                                         Effect2 = pygame.mixer.Sound("SoundEffects/DayhoofScream.mp3")
@@ -163,10 +133,11 @@ class Charter:
                             if self.rect.left < other.rect.right:
                                 if self.rect.bottom > other.rect.top:
                                     if self.rect.top < other.rect.bottom:
-                                        print("kind discovered")
+                                        #print("kind discovered")
                                         self.speedy -= other.mass / 3
                                         self.speedx = other.speedx * other.mass / 40
                                         self.health -= other.damage
+                                        #print(self.health)
                                         self.move()
                 
     def update(self, size, playerpos):
@@ -180,6 +151,12 @@ class Charter:
         self.standing = False
         self.hitCounter += 1
         self.hitAGuyX = False
+        if self.kind == "GoopyGlob":
+            self.EnemyHealthbar = ImageHud(pygame.image.load("Bro/Images/HealthBar.png"), [self.rect.center[0] - 30, self.rect.center[1] - 55])
+            if self.health > 0:
+                self.EnemyHealthbar.update(pygame.transform.scale(pygame.image.load("Bro/Images/HealthBar.png"), [64 + (self.health - 20)/0.3125, 8]))
+            if self.health <= 0:
+                pass
         
     def elasticCollision(self, other, direction):
         # ~ ke10=(mass1*myInitialVelocity**2)/2
