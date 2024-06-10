@@ -177,10 +177,9 @@ class shield:
                    images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), 
                             pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")
                             ]):
-        self.images = [pygame.image.load("Earth/SoupLadle/Images/SoupLadleLeft.png"), pygame.image.load("Earth/SoupLadle/Images/SoupLadleRight.png")]
+        self.images = images
         self.facing = angle
         self.frame = 1
-        print(self.images)
         self.image = self.images[self.frame]  
         self.rect = self.image.get_rect(center = startPos)
         #self.rect = self.rect.animate(startPos)
@@ -212,11 +211,16 @@ class shield:
                 
     def animate(self):
         print("animate is called")
-        if self.theWay: self.speedx += 4 * self.speedScaler
-        if not self.theWay: self.speedx -= 4 * self.speedScaler
+        if self.theWay: 
+            self.speedx += 4 * self.speedScaler
+            # ~ self.frame = 0
+        if not self.theWay: 
+            self.speedx -= 4 * self.speedScaler
+            # ~ self.frame = 1
         
             
     def update(self, player):
+        self.rect.top = player.rect.top
         if getScaledMouse()[0] > player.rect.center[0]:
             self.frame = 0
         else:
@@ -225,14 +229,12 @@ class shield:
         if getScaledMouse()[0] > player.rect.center[0]:
             self.theWay = True
         else: self.theWay = False
-        self.speedy -= self.playerSpeedY
-        self.speedy += player.speedy
-        self.playerSpeedY = player.speedy
         self.speedx -= self.playerSpeedX
         self.speedx += player.speedx
         self.playerSpeedX = player.speedx
         self.animate()
         self.move()
+        self.image = self.images[self.frame]
         
 
 
