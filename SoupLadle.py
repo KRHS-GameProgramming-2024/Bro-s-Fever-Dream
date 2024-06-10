@@ -6,7 +6,7 @@ class SoupLadle(dagger):
         self.gravity = 2
         self.mass = 28
         self.didBounceY = False
-        self.damage = 2
+        self.damage = 5
         self.speedScaler = 2
         self.timeScaler = 6
         
