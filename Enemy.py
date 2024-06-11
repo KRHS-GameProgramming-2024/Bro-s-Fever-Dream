@@ -137,6 +137,10 @@ class Charter:
                                         self.speedy -= other.mass / 3
                                         self.speedx = other.speedx * other.mass / 40
                                         self.health -= other.damage
+                                        if self.kind == "GoopyGlob":
+                                            Effect3 = pygame.mixer.Sound("SoundEffects/RobertScream.mp3")
+                                            #Effect3.set_volume(0.1)
+                                            Effect3.play()
                                         #print(self.health)
                                         self.move()
                 
