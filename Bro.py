@@ -118,8 +118,8 @@ class Bro(Charter):
         if self.scroll == 0: self.equipped = Lavarang
         elif self.scroll == 1: self.quipped = SoupLadle  
         elif self.scroll == 2: self.equipped = HeroShield
-        print(self.scroll)
-        print(self.equipped)
+        #print(self.scroll)
+        #print(self.equipped)
         #print(self.speed)
         self.speedy += self.gravity
         self.move()

@@ -53,20 +53,27 @@ pygame.image.load("Backgrounds/SurfaceDay.png")
 Clock = pygame.time.Clock();
 
 RESPAWN = pygame.USEREVENT
+DELAY = pygame.USEREVENT
 
 # ~ Stones = []
 # ~ GraveCount = 0
 
 StartScreen = True
 MainGame = False
-BareWare = True
+BareWare = False
 Title = False
 TitleWait = False
 Delay1 = True
+DelayNo1 = False
+Delay2 = False
+DelayNo2 = False
+Delay3 = False
+DelayNo3 = False
 StartMusic = True
 MainMusic = True
 Timer = True
 MainReload = False
+NoRespawn = True
 
 # ~ world = 1
 # ~ levX = 0
@@ -94,40 +101,80 @@ def use(self, direction):
         
 while True:
     while StartScreen == True:
-        screen.fill((0,0,0))
+        
         if StartMusic == True:
             music(8)
             StartMusic = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit();
+            elif event.type == DELAY:
+                pygame.event.clear(DELAY)
+                if StartScreen == True:
+                    if DelayNo1 == True:
+                        print("Why")
+                        BareWare = True
+                        DelayNo1 = False
+                    elif DelayNo2 == True:
+                        screen.fill((0,0,0))
+                        BareWare = False
+                        DelayNo2 = False
+                        Delay3 = True
+                    elif DelayNo3 == True:
+                        print("Hello")
+                        Title = True
+                        DelayNo3 = False
+                else:
+                    pass
+                
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                      StartScreen = False
                      MainGame = True
                      MainReload = True
+                     Delay1 = False
+                     Delay2 = False
+                     Delay3 = False
+                     DelayNo1 = False
+                     DelayNo2 = False
+                     DelayNo3 = False
+                     NoRespawn = True
                 
         
         
-        if Delay1 == True:
-            pygame.time.delay(1600)
+        if Delay1:
+            screen.fill((0,0,0))
+            DelayNo1 = True
+            pygame.time.set_timer(DELAY, 1600, 1)
+            Delay1 = False
+            
+        if Delay2:
+            DelayNo2 = True
+            pygame.time.set_timer(DELAY, 1600, 1)
+            Delay2 = False
+            
+        if Delay3:
+            DelayNo3 = True
+            pygame.time.set_timer(DELAY, 1600, 1)
+            Delay3 = False
         
-        if TitleWait == True:
-            Title = True
+        # ~ if TitleWait == True:
+            # ~ Title = True
         
-        if BareWare == False:
-            TitleWait = True
+        # ~ if BareWare == False:
+            # ~ TitleWait = True
         
-        if Title == True:
+        if Title:
+            screen.fill((0,0,0))
             screen.blit(pygame.image.load("TitleScreen/TitleScreen.png"),[(1024-952)/2, (768-714)/2])
             screen.blit(pygame.image.load("TitleScreen/TitleText.png"), [(1024-929)/2, (768-228)/3])
+            screen.blit(pygame.image.load("TitleScreen/SpaceText1.png"), [(1024-525)/2, (768-125)/1.35])
             Delay1 = False
         
-        if BareWare == True:
+        if BareWare:
             screen.blit(pygame.image.load("TitleScreen/BareWareBig.png"),[(1024-120)/2, (768-236)/2])
             BareWare = False
-            Delay1 = True
-            pygame.time.delay(1000)
+            Delay2 = True
         
         width, height = pygame.display.get_surface().get_size()
         width = width/size[0]
@@ -142,8 +189,8 @@ while True:
         pygame.display.flip()
         Clock.tick(60)
         
-    while MainGame == True:
-        if MainReload == True:
+    while MainGame:
+        if MainReload:
             import math, pygame, sys, random
             #enemies
             from Gravestone import *
@@ -212,15 +259,17 @@ while True:
                 sys.exit();
             elif event.type == RESPAWN:
                 pygame.event.clear(RESPAWN)
-                screen.fill((0,0,0))
-                StartScreen = True
-                MainGame = False
-                BareWare = True
-                Title = False
-                TitleWait = False
-                Delay1 = True
-                StartMusic = True
-                MainMusic = True
+                if not NoRespawn:
+                    screen.fill((0,0,0))
+                    StartScreen = True
+                    MainGame = False
+                    print("is it here?")
+                    BareWare = True
+                    Title = False
+                    TitleWait = False
+                    Delay1 = True
+                    StartMusic = True
+                    MainMusic = True
             elif event.type == pygame.KEYDOWN:
                 #print(event.key)
                 if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -353,6 +402,7 @@ while True:
             else:
                 pass
         if player.living == False and Timer == True:
+            NoRespawn = False
             pygame.time.set_timer(RESPAWN, 5000, 1)
             Timer = False
         #print(player.jumping, player.speedy)
